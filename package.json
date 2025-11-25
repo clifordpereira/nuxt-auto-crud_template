@@ -8,19 +8,25 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.74",
     "@iconify-json/simple-icons": "^1.2.59",
+    "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "^4.2.1",
+    "@nuxthub/core": "^0.9.0",
+    "drizzle-orm": "^0.44.7",
     "nuxt": "^4.2.1"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.10.0",
+    "drizzle-kit": "^0.31.7",
     "eslint": "^9.39.1",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.1.5"
+    "vue-tsc": "^3.1.5",
+    "wrangler": "^4.50.0"
   },
   "packageManager": "pnpm@10.23.0"
 }
