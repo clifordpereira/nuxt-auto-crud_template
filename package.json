@@ -19,7 +19,8 @@
     "@nuxt/ui": "^4.2.1",
     "@nuxthub/core": "^0.9.0",
     "drizzle-orm": "^0.44.7",
-    "nuxt": "^4.2.1"
+    "nuxt": "^4.2.1",
+    "nuxt-auto-crud": "^1.2.2"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.10.0",
