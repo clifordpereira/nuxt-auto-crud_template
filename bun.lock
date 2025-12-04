@@ -18,7 +18,7 @@
         "drizzle-orm": "^0.44.7",
         "nuxt": "^4.2.1",
         "nuxt-auth-utils": "^0.5.25",
-        "nuxt-auto-crud": "^1.8.0",
+        "nuxt-auto-crud": "^1.9.0",
         "pluralize": "^8.0.0",
         "zod": "^4.1.13",
       },
@@ -1778,7 +1778,7 @@
 
     "nuxt-authorization": ["nuxt-authorization@0.3.5", "", { "dependencies": { "@nuxt/kit": "^3.17.7" } }, "sha512-WvgEj+j1yE/XwMEIOUIhLIcvSQcZsJ/rl7J2abhPR4wzkqz0FJKoBJM/Pz3fBEmG+sl/aX6bn0Ja5HESRJhNnw=="],
 
-    "nuxt-auto-crud": ["nuxt-auto-crud@1.8.0", "", { "dependencies": { "@nuxt/kit": "^4.2.1", "@types/pluralize": "^0.0.33", "c12": "^2.0.1", "jose": "^5.9.6", "pluralize": "^8.0.0", "scule": "^1.0.0" }, "peerDependencies": { "drizzle-orm": ">=0.30.0" } }, "sha512-talB4DYnYxin0ZdeZUC0V36uBE3Cr6M7Kn1jLHkt8XgSVWcuark8XbJvNOUzLtLMm8iWVybwobV1WDoSIY+tlw=="],
+    "nuxt-auto-crud": ["nuxt-auto-crud@1.9.0", "", { "dependencies": { "@nuxt/kit": "^4.2.1", "@types/pluralize": "^0.0.33", "c12": "^2.0.1", "jose": "^5.9.6", "pluralize": "^8.0.0", "scule": "^1.0.0" }, "peerDependencies": { "drizzle-orm": ">=0.30.0" } }, "sha512-tX5S8+mZ7J4WWNkcN3/jqyWqLVESXk2WXQVF42rTi1kgxISAy6M4Nlznd23xFxBFlKLmjepJFTrBIJ252mv7jQ=="],
 
     "nypm": ["nypm@0.6.2", "", { "dependencies": { "citty": "^0.1.6", "consola": "^3.4.2", "pathe": "^2.0.3", "pkg-types": "^2.3.0", "tinyexec": "^1.0.1" }, "bin": { "nypm": "dist/cli.mjs" } }, "sha512-7eM+hpOtrKrBDCh7Ypu2lJ9Z7PNZBdi/8AT3AX8xoCj43BBVHD0hPSTEvMtkMpfs8FCqBGhxB+uToIQimA111g=="],
 
