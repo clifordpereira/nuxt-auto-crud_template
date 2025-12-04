@@ -1,31 +1,11 @@
-# Nuxt Starter Template
+# Nuxt Auto CRUD Starter
 
-[![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
+A starter template for [Nuxt Auto CRUD](https://github.com/clifordpereira/nuxt-auto-crud) module.
 
-Use this template to get started with [Nuxt UI](https://ui.nuxt.com) quickly.
-
-- [Live demo](https://starter-template.nuxt.dev/)
-- [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
-
-<a href="https://starter-template.nuxt.dev/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-    <img alt="Nuxt Starter Template" src="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-  </picture>
-</a>
-
-> The starter template for Vue is on https://github.com/nuxt-ui-templates/starter-vue.
-
-## Quick Start
-
-```bash [Terminal]
-npm create nuxt@latest -- -t github:nuxt-ui-templates/starter
-```
-
-## Deploy your own
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-name=starter&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-ui-templates%2Fstarter&demo-image=https%3A%2F%2Fui.nuxt.com%2Fassets%2Ftemplates%2Fnuxt%2Fstarter-dark.png&demo-url=https%3A%2F%2Fstarter-template.nuxt.dev%2F&demo-title=Nuxt%20Starter%20Template&demo-description=A%20minimal%20template%20to%20get%20started%20with%20Nuxt%20UI.)
+- [Documentation](https://auto-crud.clifland.in/)
+- [Module Repo](https://github.com/clifordpereira/nuxt-auto-crud)
+- [Report Issue](https://github.com/clifordpereira/nuxt-auto-crud/issues)
+- [Creator Website](https://www.clifland.in/)
 
 ## Setup
 
@@ -57,4 +37,44 @@ Locally preview production build:
 pnpm preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Usage Modes
+
+This template comes pre-configured with `nuxt-auto-crud` for a fullstack experience.
+
+### Fullstack (Default)
+
+No extra steps needed. `nuxt-auto-crud` is installed and configured.
+
+### Frontend Only
+
+If you wish to use this template as a frontend-only application:
+
+1. Uninstall the module:
+   ```bash
+   npm uninstall nuxt-auto-crud
+   ```
+2. Open `nuxt.config.ts` and remove `'nuxt-auto-crud'` from the `modules` list.
+3. Remove the `autoCrud` configuration block from `nuxt.config.ts`.
+
+## Database Reset & Seeding
+
+If you want to delete all data and start fresh:
+
+1. Delete the `.data` directory.
+2. Run the database generation command:
+   ```bash
+   bun db:generate
+   ```
+3. Restart the server:
+   ```bash
+   bun run dev
+   ```
+
+**Default Admin User:**
+
+On server restart, a default admin user is created:
+- **Email:** `admin@example.com`
+- **Password:** `$1Password`
+
+**Security Note:**
+Log in with these credentials, create a new user with the `admin` role, and then delete this default admin user.

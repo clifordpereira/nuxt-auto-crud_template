@@ -1,8 +1,8 @@
-// drizzle.config.ts
-import { defineConfig } from "drizzle-kit";
+import { defineConfig } from 'drizzle-kit'
 
 export default defineConfig({
-  dialect: "sqlite",
-  schema: "./server/database/schema.ts",
-  out: "./server/database/migrations",
-});
+  dialect: 'sqlite',
+  schema: './server/database/schema/index.ts',
+  out: './server/database/migrations',
+  tablesFilter: ['!_hub_migrations'],
+})
