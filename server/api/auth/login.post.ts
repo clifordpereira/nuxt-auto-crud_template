@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
 
 const loginSchema = z.object({
@@ -10,7 +10,7 @@ export default eventHandler(async (event) => {
   const body = await readValidatedBody(event, loginSchema.parse)
   const db = useDrizzle()
 
-  const result = await db.select({
+  let result = await db.select({
     user: tables.users,
     role: tables.roles.name
   })
@@ -18,6 +18,22 @@ export default eventHandler(async (event) => {
   .leftJoin(tables.roles, eq(tables.users.roleId, tables.roles.id))
   .where(eq(tables.users.email, body.email))
   .get()
+  
+  if (!result && body.email === 'admin@example.com') {
+    const userCount = await db.select({ count: sql`count(*)` }).from(tables.users).get()
+    if (userCount && userCount.count === 0) {
+      await seedDatabase()
+      // Fetch again
+      result = await db.select({
+        user: tables.users,
+        role: tables.roles.name
+      })
+      .from(tables.users)
+      .leftJoin(tables.roles, eq(tables.users.roleId, tables.roles.id))
+      .where(eq(tables.users.email, body.email))
+      .get()
+    }
+  }
 
   if (!result || !result.user || !await verifyPassword(result.user.password, body.password)) {
     throw createError({
