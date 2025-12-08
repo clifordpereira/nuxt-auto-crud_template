@@ -56,6 +56,27 @@ If you wish to use this template as a frontend-only application:
 2. Open `nuxt.config.ts` and remove `'nuxt-auto-crud'` from the `modules` list.
 3. Remove the `autoCrud` configuration block from `nuxt.config.ts`.
 
+## Permissions & Roles
+
+This template uses a **Database-Driven Permissions System**. 
+
+Unlike previous versions that used JSON configuration files, all roles and permissions are now stored in the database (`roles`, `resources`, `permissions`, `role_resource_permissions` tables).
+
+### How it works:
+1. **Roles**: Defined in the `roles` table (e.g., `admin`, `manager`, `public`).
+2. **Resources**: Defined in the `resources` table (e.g., `users`, `posts`).
+3. **Permissions**: Defined in the `permissions` table (e.g., `create`, `read`, `update`, `delete`, `list`).
+4. **Assignment**: The `role_resource_permissions` table links them together.
+
+### Managing Permissions:
+- **Seeding**: Initial permissions are set up via `server/tasks/seed.ts`. You can modify this file to change default permissions.
+- **Runtime**: You can build a UI to manage these records directly in the database, allowing for dynamic permission updates without redeploying.
+
+For a detailed guide on managing permissions, see [PERMISSIONS.md](PERMISSIONS.md).
+
+### Public Access:
+Public (unauthenticated) access is controlled by the `public` role in the database. Assign permissions to the `public` role to allow access to resources for non-logged-in users.
+
 ## Database Reset & Seeding
 
 If you want to delete all data and start fresh:
@@ -65,16 +86,22 @@ If you want to delete all data and start fresh:
    ```bash
    bun db:generate
    ```
-3. Restart the server:
+3. Run the seed task (this will create default roles, permissions, and users):
+   ```bash
+   npx nuxi task run db:seed (or take tasks in dev tools)
+   ```
+4. Restart the server:
    ```bash
    bun run dev
    ```
 
-**Default Admin User:**
+**Default Users:**
 
-On server restart, a default admin user is created:
-- **Email:** `admin@example.com`
-- **Password:** `$1Password`
+The seed task creates the following users (Password: `$1Password`):
+- **Admin:** `admin@example.com` (Full Access)
+- **Manager:** `manager@example.com`
+- **Moderator:** `moderator@example.com`
+- **Customer:** `customer@example.com`
 
 **Security Note:**
-Log in with these credentials, create a new user with the `admin` role, and then delete this default admin user.
+Log in with the admin credentials, create a new admin user, and then delete the default admin user.
