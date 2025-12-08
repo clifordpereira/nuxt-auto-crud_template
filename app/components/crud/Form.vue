@@ -28,7 +28,7 @@ const emit = defineEmits<{
 
 // filter out system fields
 const filteredFields = props.schema.fields.filter(
-  field => field.name !== 'created_at' && field.name !== 'updated_at' && field.name !== 'id',
+  field => !['id', 'created_at', 'updated_at', 'deleted_at', 'createdAt', 'updatedAt', 'deletedAt'].includes(field.name),
 )
 
 // dynamically build zod schema
@@ -45,7 +45,6 @@ const state = reactive<Record<string, unknown>>(
       if ((field.name.endsWith('_id') || field.name.endsWith('Id')) && value && typeof value === 'object' && 'id' in value) {
         value = (value as { id: unknown }).id
       }
-      // Case 2: value is undefined, but there might be a relation object (e.g. field is customer_id, but props has customer: { id: 1 })
       else if ((field.name.endsWith('_id') || field.name.endsWith('Id')) && value === undefined) {
         const relationName = field.name.endsWith('_id') ? field.name.replace('_id', '') : field.name.replace('Id', '')
         const relationValue = props.initialState?.[relationName]

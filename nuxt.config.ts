@@ -33,6 +33,12 @@ export default defineNuxtConfig({
     database: true,
   },
 
+  nitro: {
+    experimental: {
+      tasks: true,
+    },
+  },
+
   autoCrud: {
     schemaPath: 'server/database/schema',
     auth: {

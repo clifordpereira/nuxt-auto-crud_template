@@ -1,12 +1,12 @@
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { systemFields, statusField } from './utils'
 
 export const users = sqliteTable('users', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
+  ...systemFields,
+  ...statusField,
+  name: text('name'),
   email: text('email').notNull().unique(),
   password: text('password').notNull(),
-  name: text('name'),
   avatar: text('avatar'),
   role: text('role').default('user'),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
-  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
 })
