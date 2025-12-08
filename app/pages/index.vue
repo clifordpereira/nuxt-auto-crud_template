@@ -2,7 +2,7 @@
 <script setup lang="ts">
 const siteData = {
   title: 'Nuxt Auto CRUD',
-  description: 'Automatic CRUD API & UI generation for Nuxt applications',
+  description: 'Automatic CRUD API & UI for Nuxt applications',
   footer: 'Built with Nuxt, Drizzle ORM, and nuxt-auto-crud',
 }
 
