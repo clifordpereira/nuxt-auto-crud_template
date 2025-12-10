@@ -114,8 +114,9 @@ export const seedDatabase = async () => {
   }
 
   // 5. Seed Users
+  const config = useRuntimeConfig()
   const usersToSeed = [
-    { email: 'admin@example.com', name: 'Admin User', role: 'admin' },
+    { email: config.adminEmail, name: 'Admin User', role: 'admin' },
     { email: 'manager@example.com', name: 'Manager User', role: 'manager' },
     { email: 'moderator@example.com', name: 'Moderator User', role: 'moderator' },
     { email: 'customer@example.com', name: 'Customer User', role: 'customer' },

@@ -21,6 +21,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   runtimeConfig: {
+    adminEmail: 'admin@example.com',
     public: {
       crudBaseUrl: '/api',
     },
