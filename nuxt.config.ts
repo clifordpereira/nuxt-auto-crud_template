@@ -11,6 +11,9 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-authorization',
     'nuxt-auto-crud',
+    '@nuxt/content',
+    '@nuxt/image',
+    'nuxt-og-image'
   ],
 
   devtools: { enabled: true },
