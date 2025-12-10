@@ -48,6 +48,10 @@ const columns = [{
     label: 'Permissions',
     to: 'https://www.youtube.com/watch?v=Yty3OCYbwOo',
     target: '_blank'
+  }, {
+    label: 'RBAC Demo',
+    to: 'https://www.youtube.com/watch?v=W0ju4grRC9M',
+    target: '_blank'
   }],
 }, {
   label: 'Built with',
