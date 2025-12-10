@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { useChangeCase } from '@vueuse/integrations/useChangeCase'
-import resourceAbility from '../../../shared/utils/abilities'
+import resourceAbility from '~~/shared/utils/abilities'
 
 const props = defineProps<{
   resource: string
