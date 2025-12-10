@@ -31,6 +31,11 @@ Build the application for production:
 pnpm build
 ```
 
+> **Important:** When deploying to production, ensure you set the following environment variables:
+> - `NUXT_ADMIN_EMAIL`
+> - `NUXT_ADMIN_PASSWORD`
+> - `NUXT_SESSION_PASSWORD`
+
 Locally preview production build:
 
 ```bash
@@ -99,6 +104,7 @@ If you want to delete all data and start fresh:
 
 The seed task creates the following users (Password: `$1Password`):
 - **Admin:** `admin@example.com` (Full Access)
+  - *Note: The default password is `$1Password`. This hints at the complexity requirements (symbol, number, capital & small letter). You can configure these via `NUXT_ADMIN_EMAIL` and `NUXT_ADMIN_PASSWORD` in your `.env` file.*
 - **Manager:** `manager@example.com`
 - **Moderator:** `moderator@example.com`
 - **Customer:** `customer@example.com`

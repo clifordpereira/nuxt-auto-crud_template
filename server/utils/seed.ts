@@ -127,7 +127,8 @@ export const seedDatabase = async () => {
 
     if (!existingUser) {
       console.log(`Seeding user: ${userData.email}...`)
-      const hashedPassword = await hashPassword('$1Password')
+      const passwordToHash = userData.role === 'admin' ? config.adminPassword : '$1Password'
+      const hashedPassword = await hashPassword(passwordToHash)
 
       await db.insert(tables.users).values({
         email: userData.email,
