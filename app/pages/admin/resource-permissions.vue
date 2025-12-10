@@ -167,8 +167,11 @@ const saveChanges = async () => {
   }
 }
 
-// Filter out system resources if needed, or just show all
-const displayResources = computed(() => resources.value || [])
+// Filter out system resources
+const displayResources = computed(() => resources.value?.filter(r => 
+  !['roles', 'permissions', 'resources', 'roleResourcePermissions'].includes(r.name)
+) || [])
+
 const displayPermissions = computed(() => {
   if (!permissions.value) return []
   const order = ['list', 'create', 'read', 'update', 'delete']
@@ -176,6 +179,13 @@ const displayPermissions = computed(() => {
     return order.indexOf(a.code) - order.indexOf(b.code)
   })
 })
+
+// Ensure a role is selected
+watch(items, (newItems) => {
+  if (newItems.length > 0 && (selectedIndex.value < 0 || selectedIndex.value >= newItems.length)) {
+    selectedIndex.value = 0
+  }
+}, { immediate: true })
 
 </script>
 
