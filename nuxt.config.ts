@@ -41,7 +41,6 @@ export default defineNuxtConfig({
   ssr: true,
 
   nitro: {
-    preset: 'cloudflare-pages',
     experimental: {
       tasks: true,
       openAPI: true
