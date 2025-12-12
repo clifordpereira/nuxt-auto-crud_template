@@ -35,7 +35,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-27',
 
   hub: {
-    database: true,
+    db: 'sqlite',
   },
 
   ssr: true,
@@ -46,14 +46,14 @@ export default defineNuxtConfig({
       openAPI: true
     },
 
-    preset: 'cloudflare_module',
-    cloudflare: {
-      nodeCompat: true
-    }
+    // preset: 'cloudflare_module',
+    // cloudflare: {
+    //   nodeCompat: true
+    // }
   },
 
   autoCrud: {
-    schemaPath: 'server/database/schema',
+    schemaPath: 'server/db/schema',
     auth: {
       type: 'session',
       authentication: true,
