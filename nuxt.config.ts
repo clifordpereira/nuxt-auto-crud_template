@@ -45,6 +45,12 @@ export default defineNuxtConfig({
       tasks: true,
       openAPI: true
     },
+
+    preset: "cloudflare_module",
+    cloudflare: {
+      deployConfig: true,
+      nodeCompat: true
+    }
   },
 
   autoCrud: {
