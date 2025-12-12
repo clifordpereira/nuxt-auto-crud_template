@@ -1,12 +1,7 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "nuxt-auto-crud-template",
-	"main": "./.output/server/index.mjs",
 	"compatibility_date": "2025-12-11",
-	"assets": {
-		"binding": "ASSETS",
-		"directory": "./.output/public/"
-	},
+
 	"observability": {
 		"enabled": true
 	},
