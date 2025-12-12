@@ -9,6 +9,7 @@
         "@libsql/client": "^0.15.15",
         "@nuxt/content": "^3.9.0",
         "@nuxt/image": "^2.0.0",
+        "@nuxt/scripts": "^0.13.0",
         "@nuxt/ui": "^4.2.1",
         "@nuxthub/core": "^0.10.1",
         "@types/pluralize": "^0.0.33",

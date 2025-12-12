@@ -13,7 +13,8 @@ export default defineNuxtConfig({
     'nuxt-auto-crud',
     '@nuxt/content',
     '@nuxt/image',
-    'nuxt-og-image'
+    'nuxt-og-image',
+    '@nuxt/scripts',
   ],
 
   devtools: { enabled: true },
@@ -46,10 +47,10 @@ export default defineNuxtConfig({
       openAPI: true
     },
 
-    // preset: 'cloudflare_module',
-    // cloudflare: {
-    //   nodeCompat: true
-    // }
+    preset: 'cloudflare_module',
+    cloudflare: {
+      nodeCompat: true
+    }
   },
 
   autoCrud: {
@@ -66,6 +67,13 @@ export default defineNuxtConfig({
       stylistic: {
         commaDangle: 'never',
         braceStyle: '1tbs',
+      },
+    },
+  },
+  scripts: {
+    registry: {
+      googleAnalytics: {
+        id: process.env.NUXT_PUBLIC_GA_ID || '',
       },
     },
   },
