@@ -1,45 +1,28 @@
-import { eq, sql } from 'drizzle-orm'
-import { z } from 'zod'
+import { eq } from 'drizzle-orm'
 import { db, schema } from 'hub:db'
 
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-})
-
 export default eventHandler(async (event) => {
-  const body = await readValidatedBody(event, loginSchema.parse)
+  const session = await getUserSession(event)
+  if (!session.user || !(session.user as { id: number }).id) {
+    throw createError({ statusCode: 401, message: 'Not authenticated' })
+  }
 
-  let result = await db.select({
+  const userId = (session.user as { id: number }).id
+
+  // Fetch fresh user data
+  const result = await db.select({
     user: schema.users,
     role: schema.roles.name,
   })
     .from(schema.users)
     .leftJoin(schema.roles, eq(schema.users.roleId, schema.roles.id))
-    .where(eq(schema.users.email, body.email))
+    .where(eq(schema.users.id, userId))
     .get()
 
-  if (!result && body.email === 'admin@example.com') {
-    const userCount = await db.select({ count: sql`count(*)` }).from(schema.users).get()
-    if (userCount && userCount.count === 0) {
-      await seedDatabase()
-      // Fetch again
-      result = await db.select({
-        user: schema.users,
-        role: schema.roles.name,
-      })
-        .from(schema.users)
-        .leftJoin(schema.roles, eq(schema.users.roleId, schema.roles.id))
-        .where(eq(schema.users.email, body.email))
-        .get()
-    }
-  }
-
-  if (!result || !result.user || !await verifyPassword(result.user.password, body.password)) {
-    throw createError({
-      statusCode: 401,
-      message: 'Invalid credentials',
-    })
+  if (!result || !result.user) {
+    // User deleted? Clear session
+    await clearUserSession(event)
+    throw createError({ statusCode: 401, message: 'User not found' })
   }
 
   const user = result.user
@@ -78,5 +61,5 @@ export default eventHandler(async (event) => {
     },
   })
 
-  return { user }
+  return { user: session.user }
 })
