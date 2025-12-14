@@ -40,6 +40,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    preset: 'firebase',
     experimental: {
       tasks: true,
       openAPI: true
