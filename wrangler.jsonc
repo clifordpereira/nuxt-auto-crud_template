@@ -5,7 +5,8 @@
     {
         "binding": "DB",
         "database_name": "nac-template-db",
-        "database_id": "caee4ecf-0847-4c6d-bb12-5947dd6981c8"
+        "database_id": "caee4ecf-0847-4c6d-bb12-5947dd6981c8",
+        "migrations_dir": "server/db/migrations/sqlite"
       }
     ],
   "observability": {
