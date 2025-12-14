@@ -2,12 +2,11 @@
   "name": "nuxt-auto-crud-starter",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.11.0",
   "scripts": {
     "build": "NODE_OPTIONS='--max-old-space-size=8192' nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
-    "postinstall": "npx nuxt prepare",
+    "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
     "test": "vitest",
@@ -57,5 +56,6 @@
     "typescript": "^5.9.3",
     "vitest": "^3.2.4",
     "vue-tsc": "^3.1.5"
-  }
+  },
+  "packageManager": "pnpm@10.23.0"
 }
