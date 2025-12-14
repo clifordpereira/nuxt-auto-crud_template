@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
     "test": "vitest",
-    "db:generate": "nuxt db generate"
+    "db:generate": "nuxt db generate",
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.75",
