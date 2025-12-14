@@ -40,11 +40,12 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'cloudflare_pages',
-    cloudflare: {
-      deployConfig: true,
-      nodeCompat: true,
-    },
+    preset: 'firebase_app_hosting',
+    // preset: 'cloudflare_pages',
+    // cloudflare: {
+    //   deployConfig: true,
+    //   nodeCompat: true,
+    // },
     experimental: {
       tasks: true,
       openAPI: true,
