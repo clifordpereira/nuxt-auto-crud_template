@@ -2,6 +2,7 @@
   "name": "nuxt-auto-crud-starter",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.11.0",
   "scripts": {
     "build": "NODE_OPTIONS='--max-old-space-size=8192' nuxt build",
     "dev": "nuxt dev",
@@ -10,8 +11,7 @@
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
     "test": "vitest",
-    "db:generate": "nuxt db generate",
-    "deploy": "npm run build && wrangler pages deploy .output/public"
+    "db:generate": "nuxt db generate"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.75",
@@ -53,7 +53,6 @@
     "playwright-core": "^1.57.0",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.1.5",
-    "wrangler": "^4.52.1"
+    "vue-tsc": "^3.1.5"
   }
 }

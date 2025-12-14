@@ -43,11 +43,6 @@ export default defineNuxtConfig({
     experimental: {
       tasks: true,
       openAPI: true
-    },
-
-    preset: 'cloudflare-pages',
-    cloudflare: {
-      nodeCompat: true
     }
   },
 
