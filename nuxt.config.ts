@@ -39,8 +39,6 @@ export default defineNuxtConfig({
     db: 'sqlite',
   },
 
-  ssr: true,
-
   nitro: {
     experimental: {
       tasks: true,
