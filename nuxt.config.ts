@@ -45,7 +45,7 @@ export default defineNuxtConfig({
       openAPI: true
     },
 
-    preset: 'cloudflare_module',
+    preset: 'cloudflare-pages',
     cloudflare: {
       nodeCompat: true
     }
