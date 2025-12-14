@@ -1,0 +1,14 @@
+{
+  "apphosting": {
+    "backendId": "nac-template-db",
+    "rootDir": "/",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "functions"
+    ],
+    "alwaysDeployFromSource": true
+  }
+}
