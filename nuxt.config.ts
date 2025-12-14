@@ -40,11 +40,15 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'vercel',
+    preset: 'cloudflare_module',
+    cloudflare: {
+      deployConfig: true,
+      nodeCompat: true,
+    },
     experimental: {
       tasks: true,
-      openAPI: true
-    }
+      openAPI: true,
+    },
   },
 
   autoCrud: {
