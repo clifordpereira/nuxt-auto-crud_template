@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
     "test": "vitest",
-    "db:generate": "nuxt db generate"
+    "db:generate": "nuxt db generate",
+    "deploy": "npm run build && wrangler pages deploy .output/public"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.75",
