@@ -1,5 +1,6 @@
 import { eq, and } from 'drizzle-orm'
 import { db, schema } from 'hub:db'
+import { hashUserPassword } from './hashing'
 
 export const seedDatabase = async () => {
   console.log('Running DB seed task...')
@@ -137,7 +138,7 @@ export const seedDatabase = async () => {
     if (!existingUser) {
       console.log(`Seeding user: ${userData.email}...`)
       const passwordToHash = userData.role === 'admin' ? '$1Password' : '$1Password'
-      const hashedPassword = await hashPassword(passwordToHash)
+      const hashedPassword = await hashUserPassword(passwordToHash)
 
       await db.insert(schema.users).values({
         email: userData.email,

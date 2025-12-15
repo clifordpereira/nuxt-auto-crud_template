@@ -1,6 +1,7 @@
 import { eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { db, schema } from 'hub:db'
+import { hashUserPassword, verifyUserPassword } from '../../utils/hashing'
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -43,14 +44,16 @@ export default eventHandler(async (event) => {
     })
   }
 
-  let isPasswordValid = await verifyPassword(result.user.password, body.password)
+  let isPasswordValid = await verifyUserPassword(result.user.password, body.password)
 
   // Auto-fix admin password hash if it fails verification but matches the configured admin password
+  // This handles cases where hashes generated in one environment (e.g. invalid seed) don't match the current environment
   if (!isPasswordValid) {
     const config = useRuntimeConfig()
+    // Check if the user is the admin and the provided password matches the server-side configured admin password
     if (result.user.email === config.adminEmail && body.password === config.adminPassword) {
       console.log('Admin password hash mismatch detected. Re-hashing and updating...')
-      const newHash = await hashPassword(body.password)
+      const newHash = await hashUserPassword(body.password)
       await db.update(schema.users)
         .set({ password: newHash, updatedAt: new Date() })
         .where(eq(schema.users.id, result.user.id))

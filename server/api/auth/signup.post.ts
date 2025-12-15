@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { db, schema } from 'hub:db'
+import { hashUserPassword } from '../../utils/hashing'
 
 const signupSchema = z.object({
   name: z.string().min(2),
@@ -21,7 +22,7 @@ export default eventHandler(async (event) => {
   }
 
   // Hash password
-  const hashedPassword = await hashPassword(body.password)
+  const hashedPassword = await hashUserPassword(body.password)
 
   // Get default role (user)
   const defaultRole = await db.select().from(schema.roles).where(eq(schema.roles.name, 'user')).get()
