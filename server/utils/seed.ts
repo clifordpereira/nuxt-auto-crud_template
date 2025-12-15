@@ -46,7 +46,9 @@ export const seedDatabase = async () => {
       }).returning()
       resource = inserted
     }
-    resourceIds[resourceName] = resource.id
+    if (resource) {
+      resourceIds[resourceName] = resource.id
+    }
   }
 
   // 3. Seed Permissions
@@ -72,7 +74,9 @@ export const seedDatabase = async () => {
       }).returning()
       permission = inserted
     }
-    permissionIds[code] = permission.id
+    if (permission) {
+      permissionIds[code] = permission.id
+    }
   }
 
   // 4. Assign Permissions to Roles (Example: Manager gets all on users, Moderator gets read/list on users)

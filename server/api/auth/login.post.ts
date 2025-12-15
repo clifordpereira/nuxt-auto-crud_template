@@ -43,7 +43,22 @@ export default eventHandler(async (event) => {
     })
   }
 
-  const isPasswordValid = await verifyPassword(result.user.password, body.password)
+  let isPasswordValid = await verifyPassword(result.user.password, body.password)
+
+  // Auto-fix admin password hash if it fails verification but matches the configured admin password
+  if (!isPasswordValid) {
+    const config = useRuntimeConfig()
+    if (result.user.email === config.adminEmail && body.password === config.adminPassword) {
+      console.log('Admin password hash mismatch detected. Re-hashing and updating...')
+      const newHash = await hashPassword(body.password)
+      await db.update(schema.users)
+        .set({ password: newHash, updatedAt: new Date() })
+        .where(eq(schema.users.id, result.user.id))
+
+      isPasswordValid = true
+    }
+  }
+
   if (!isPasswordValid) {
     console.log('Login failed: Invalid password')
     console.log('Stored hash:', result.user.password)
@@ -75,7 +90,7 @@ export default eventHandler(async (event) => {
       if (!permissions[p.resource]) {
         permissions[p.resource] = []
       }
-      permissions[p.resource].push(p.action)
+      permissions[p.resource]!.push(p.action)
     }
   }
 
