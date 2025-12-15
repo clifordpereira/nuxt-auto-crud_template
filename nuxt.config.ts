@@ -42,10 +42,7 @@ export default defineNuxtConfig({
   nitro: {
     // preset: 'firebase_app_hosting',
     preset: 'cloudflare_module',
-    cloudflare: {
-      deployConfig: true,
-      nodeCompat: true,
-    },
+
     experimental: {
       tasks: true,
       openAPI: true,
