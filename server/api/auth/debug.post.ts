@@ -1,3 +1,4 @@
+// Trigger rebuild to ensure secrets are loaded
 export default eventHandler(async (event) => {
   const body = await readBody(event)
   const password = body.password || 'Test1234'
