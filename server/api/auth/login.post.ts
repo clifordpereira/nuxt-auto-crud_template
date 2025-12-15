@@ -35,7 +35,19 @@ export default eventHandler(async (event) => {
     }
   }
 
-  if (!result || !result.user || !await verifyPassword(result.user.password, body.password)) {
+  if (!result || !result.user) {
+    console.log('Login failed: User not found', body.email)
+    throw createError({
+      statusCode: 401,
+      message: 'Invalid credentials',
+    })
+  }
+
+  const isPasswordValid = await verifyPassword(result.user.password, body.password)
+  if (!isPasswordValid) {
+    console.log('Login failed: Invalid password')
+    console.log('Stored hash:', result.user.password)
+    console.log('Provided password length:', body.password.length)
     throw createError({
       statusCode: 401,
       message: 'Invalid credentials',

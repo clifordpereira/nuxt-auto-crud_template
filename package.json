@@ -31,7 +31,7 @@
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.44.7",
     "nuxt": "^4.2.1",
-    "nuxt-auth-utils": "^0.5.25",
+    "nuxt-auth-utils": "^0.5.26",
     "nuxt-auto-crud": "^1.20.0",
     "nuxt-og-image": "^5.1.12",
     "pluralize": "^8.0.0",
