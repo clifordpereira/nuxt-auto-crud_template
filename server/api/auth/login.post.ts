@@ -1,81 +1,39 @@
-import { eq, sql } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { db, schema } from 'hub:db'
-import { hashUserPassword, verifyUserPassword } from '../../utils/hashing'
+import { verifyUserPassword } from '../../utils/hashing'
+import { InvalidCredentialError } from '../../utils/errors'
 
 const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string(),
 })
 
 export default eventHandler(async (event) => {
   const body = await readValidatedBody(event, loginSchema.parse)
 
-  let result = await db.select({
+  const result = await db.select({
     user: schema.users,
-    role: sql<string>`${schema.roles.name}`.as('role_name'),
+    role: schema.roles.name,
   })
     .from(schema.users)
     .leftJoin(schema.roles, eq(schema.users.roleId, schema.roles.id))
     .where(eq(schema.users.email, body.email))
     .get()
 
-  if (!result && body.email === 'admin@example.com') {
-    const userCount = await db.select({ count: sql`count(*)` }).from(schema.users).get()
-    if (userCount && userCount.count === 0) {
-      await seedDatabase()
-      // Fetch again
-      result = await db.select({
-        user: schema.users,
-        role: sql<string>`${schema.roles.name}`.as('role_name'),
-      })
-        .from(schema.users)
-        .leftJoin(schema.roles, eq(schema.users.roleId, schema.roles.id))
-        .where(eq(schema.users.email, body.email))
-        .get()
-    }
-  }
-
   if (!result || !result.user) {
-    console.log('Login failed: User not found', body.email)
-    throw createError({
-      statusCode: 401,
-      message: 'Invalid credentials',
-    })
+    throw new InvalidCredentialError()
   }
 
-  let isPasswordValid = await verifyUserPassword(result.user.password, body.password)
-
-  // Auto-fix admin password hash if it fails verification but matches the configured admin password
-  // This handles cases where hashes generated in one environment (e.g. invalid seed) don't match the current environment
-  if (!isPasswordValid) {
-    const config = useRuntimeConfig()
-    // Check if the user is the admin and the provided password matches the server-side configured admin password
-    if (result.user.email === config.adminEmail && body.password === config.adminPassword) {
-      console.log('Admin password hash mismatch detected. Re-hashing and updating...')
-      const newHash = await hashUserPassword(body.password)
-      await db.update(schema.users)
-        .set({ password: newHash, updatedAt: new Date() })
-        .where(eq(schema.users.id, result.user.id))
-
-      isPasswordValid = true
-    }
-  }
+  const isPasswordValid = await verifyUserPassword(result.user.password, body.password)
 
   if (!isPasswordValid) {
-    console.log('Login failed: Invalid password')
-    console.log('Stored hash:', result.user.password)
-    console.log('Provided password length:', body.password.length)
-    throw createError({
-      statusCode: 401,
-      message: 'Invalid credentials',
-    })
+    throw new InvalidCredentialError()
   }
 
   const user = result.user
   const role = result.role || 'user'
 
-  // Fetch permissions
   const permissions: Record<string, string[]> = {}
 
   if (user.roleId) {
@@ -103,8 +61,8 @@ export default eventHandler(async (event) => {
       email: user.email,
       name: user.name,
       avatar: user.avatar,
-      role: role,
-      permissions: permissions,
+      role,
+      permissions,
     },
   })
 

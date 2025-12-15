@@ -2,6 +2,7 @@ import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { db, schema } from 'hub:db'
 import { hashUserPassword } from '../../utils/hashing'
+import { UserAlreadyExistsError } from '../../utils/errors'
 
 const signupSchema = z.object({
   name: z.string().min(2),
@@ -15,10 +16,7 @@ export default eventHandler(async (event) => {
   // Check if user exists
   const existingUser = await db.select().from(schema.users).where(eq(schema.users.email, body.email)).get()
   if (existingUser) {
-    throw createError({
-      statusCode: 400,
-      message: 'User already exists',
-    })
+    throw new UserAlreadyExistsError()
   }
 
   // Hash password
