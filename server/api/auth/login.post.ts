@@ -12,7 +12,7 @@ export default eventHandler(async (event) => {
 
   let result = await db.select({
     user: schema.users,
-    role: schema.roles.name,
+    role: sql<string>`${schema.roles.name}`.as('role_name'),
   })
     .from(schema.users)
     .leftJoin(schema.roles, eq(schema.users.roleId, schema.roles.id))
@@ -26,7 +26,7 @@ export default eventHandler(async (event) => {
       // Fetch again
       result = await db.select({
         user: schema.users,
-        role: schema.roles.name,
+        role: sql<string>`${schema.roles.name}`.as('role_name'),
       })
         .from(schema.users)
         .leftJoin(schema.roles, eq(schema.users.roleId, schema.roles.id))
