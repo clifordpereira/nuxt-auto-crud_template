@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-og-image',
     '@nuxt/scripts',
+    '@nuxt/fonts',
   ],
 
   devtools: { enabled: true },
@@ -42,11 +43,21 @@ export default defineNuxtConfig({
   nitro: {
     // preset: 'firebase_app_hosting',
     preset: 'cloudflare_module',
+    compressPublicAssets: true,
 
     experimental: {
       tasks: true,
       openAPI: true,
     },
+  },
+
+  image: {
+    domains: ['img.youtube.com', 'i.ytimg.com'],
+  },
+
+  routeRules: {
+    '/': { isr: 3600 },
+    '/docs/**': { isr: 86400 },
   },
 
   autoCrud: {
