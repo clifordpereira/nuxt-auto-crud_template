@@ -22,9 +22,9 @@ useHead({
 })
 
 useSeoMeta({
-  titleTemplate: '%s - Nuxt SaaS template',
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/saas-light.png',
-  twitterImage: 'https://ui.nuxt.com/assets/templates/nuxt/saas-light.png',
+  titleTemplate: '%s - Nuxt Auto CRUD',
+  ogImage: '/favicon_io/android-chrome-192x192.png',
+  twitterImage: '/favicon_io/android-chrome-192x192.png',
   twitterCard: 'summary_large_image',
 })
 

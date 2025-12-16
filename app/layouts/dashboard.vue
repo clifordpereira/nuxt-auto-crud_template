@@ -17,7 +17,7 @@ const mainLinks = computed(() => {
       open.value = false
     },
   }))
-  
+
   return links.filter((link) => {
     if (link.label === 'Users') {
       return hasPermission('users', 'list')

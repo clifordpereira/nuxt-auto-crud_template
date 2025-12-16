@@ -151,7 +151,7 @@ const saveChanges = async () => {
       promises.push($fetch(`${crudBaseUrl}/roleResourcePermissions/${id}`, {
         method: 'DELETE',
         headers: crudHeaders(),
-        body: undefined // Explicitly undefined for DELETE generally, though not strictly needed
+        body: undefined, // Explicitly undefined for DELETE generally, though not strictly needed
       }))
     }
 
