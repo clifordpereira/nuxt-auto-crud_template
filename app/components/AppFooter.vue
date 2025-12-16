@@ -33,6 +33,10 @@ const columns = [{
     label: 'GitHub Discussions',
     to: 'https://github.com/clifordpereira/nuxt-auto-crud/discussions/1',
     target: '_blank',
+  }, {
+    label: 'Report Issue',
+    to: 'https://github.com/clifordpereira/nuxt-auto-crud_template/issues',
+    target: '_blank',
   }],
 }, {
   label: 'YouTube',
@@ -54,9 +58,9 @@ const columns = [{
     target: '_blank',
   }],
 }, {
-  label: 'Built with',
+  label: 'Modules Used',
   children: [{
-    label: 'Nuxt Auto Crud',
+    label: 'Auto Crud',
     to: 'https://www.npmjs.com/package/nuxt-auto-crud',
     target: '_blank',
   }, {
@@ -119,7 +123,10 @@ async function onSubmit() {
     class="h-px"
   />
 
-  <UFooter :ui="{ top: 'border-b border-default' }">
+  <UFooter
+    :ui="{ top: 'border-b border-default' }"
+    class="relative"
+  >
     <template #top>
       <UContainer>
         <UFooterColumns :columns="columns">
@@ -155,12 +162,20 @@ async function onSubmit() {
 
     <template #left>
       <p class="text-muted text-sm">
+        Built with ❤️ using <NuxtLink
+          to="https://antigravity.google/"
+          target="_blank"
+          class="hover:text-primary"
+        >AntiGravity IDE</NuxtLink>
+      </p>
+
+      <div class="absolute left-1/2 -translate-x-1/2 text-muted text-sm hidden sm:block">
         Built by <NuxtLink
           to="https://clifland.in"
           target="_blank"
           class="hover:text-primary"
         >Clifland</NuxtLink>
-      </p>
+      </div>
     </template>
 
     <template #right>
@@ -168,7 +183,7 @@ async function onSubmit() {
         to="https://discord.gg/hGgyEaGu"
         target="_blank"
         icon="i-simple-icons-discord"
-        aria-label="Nuxt Auto CRUD on Discord"
+        aria-label="Auto Crud on Discord"
         color="neutral"
         variant="ghost"
       />
@@ -176,7 +191,7 @@ async function onSubmit() {
         to="https://github.com/clifordpereira/nuxt-auto-crud"
         target="_blank"
         icon="i-simple-icons-github"
-        aria-label="Nuxt Auto CRUD on GitHub"
+        aria-label="Auto Crud on GitHub"
         color="neutral"
         variant="ghost"
       />

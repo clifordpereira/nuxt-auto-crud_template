@@ -38,10 +38,11 @@ plans:
     features:
       - Turn your idea into web app
       - Web App Setup & Configuration
-      - AI Chat Integration (Tawk.to)
-      - Deployment Assistance
       - Custom Feature Development
+      - Deployment Assistance
+      - AI Chat Integration (Tawk.to)
       - Priority Email Support
+      - One-time payment
   - title: Premium
     description: End-to-end managed solution for complete peace of mind.
     price:
@@ -55,25 +56,17 @@ plans:
     features:
       - Everything in Standard
       - Fully Managed Hosting
-      - Firebase / NuxtHub / Vercel
       - Proactive Monitoring
       - Security Updates
       - Performance Optimization
       - Dedicated Support Channel
-logos:
-  title: Trusted by the world's best
-  icons:
-    - i-simple-icons-firebase
-    - i-simple-icons-render
-    - i-simple-icons-netlify
-    - i-simple-icons-vercel
-    - i-simple-icons-cloudflare
+
 faq:
   title: Frequently asked questions
   description: Everything you need to know about Nuxt Auto CRUD.
   items:
     - label: Which databases are supported?
-      content: We have currently tested Nuxt Auto CRUD with SQLite only. Support for other Drizzle ORM compatible databases will be added in future updates.
+      content: We have currently tested Auto Crud with SQLite only. Support for other Drizzle ORM compatible databases will be added in future updates.
     - label: Can I create custom APIs?
       content: Yes! The exposed APIs are suitable for most tasks. You can leverage them for standard operations, and for things like reports or analytics dashboards, you can build custom APIs exactly as you would in any other project.
     - label: How is authentication handled?
@@ -81,7 +74,7 @@ faq:
     - label: How do I go from idea to production?
       content: Check out our Quick Start Guide in the documentation (link in header) for a step-by-step workflow.
     - label: Can I use it with existing projects?
-      content: Yes, you can add Nuxt Auto CRUD to any existing Nuxt project. Check out the Installation Guide in the documentation (link in header) to get started.
+      content: Yes, you can add Auto Crud to any existing Nuxt project. Check out the Installation Guide in the documentation (link in header) to get started.
     - label: Do you offer support?
       content: We have channels for community discussion on GitHub Discussions and Discord (links in footer). For paid support and setup assistance, please contact me at clifordpereira@gmail.com.
     - label: Where can I report bugs?
