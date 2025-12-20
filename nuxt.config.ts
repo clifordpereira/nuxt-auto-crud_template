@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     'nuxt-authorization',
     "nuxt-security",
     'nuxt-delay-hydration',
+    'nuxt-og-image',
     'nuxt-auto-crud',
     '@nuxt/content',
     '@nuxt/image',
@@ -22,6 +23,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
+
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://auto-crud.clifland.in',
+  },
 
   runtimeConfig: {
     adminEmail: 'admin@example.com',
@@ -112,5 +117,9 @@ export default defineNuxtConfig({
       permissionsPolicy: false,
       crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
     },
+  },
+
+  ogImage: {
+    enabled: true,
   },
 })
