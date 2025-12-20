@@ -5,13 +5,13 @@
   "scripts": {
     "build": "NODE_OPTIONS='--max-old-space-size=8192' nuxt build",
     "dev": "nuxt dev",
-    "preview": "nuxt preview",
+    "preview": "wrangler pages dev .output/public",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
     "test": "vitest",
     "db:generate": "nuxt db generate",
-    "start": "node .output/server/index.mjs",
+    "start": "wrangler pages dev .output/public",
     "migrate:remote": "npx wrangler d1 migrations apply nac-template-db --remote"
   },
   "dependencies": {
