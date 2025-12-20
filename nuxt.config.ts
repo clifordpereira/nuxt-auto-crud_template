@@ -65,6 +65,9 @@ export default defineNuxtConfig({
     experimental: {
       tasks: true,
     },
+    externals: {
+      external: ['better-sqlite3', 'nodemailer', '@libsql/client']
+    },
   },
 
   experimental: {
