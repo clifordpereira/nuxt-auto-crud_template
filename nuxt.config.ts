@@ -7,9 +7,11 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/scripts',
     '@nuxt/fonts',
+    "nuxt-security",
     '@vueuse/nuxt',
     'nuxt-og-image',
     '@nuxthub/core',
+    'nuxt-delay-hydration',
     'nuxt-auth-utils',
     'nuxt-authorization',
     'nuxt-nodemailer',
@@ -45,6 +47,9 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/docs': { redirect: '/docs/auto-crud', prerender: false },
+    '/_ipx/**': { headers: { 'cache-control': 'max-age=31536000, public, immutable' } },
+    '/blog/**': { swr: true },
+    '/changelog/**': { swr: true },
   },
 
   compatibilityDate: '2024-07-11',
@@ -60,6 +65,12 @@ export default defineNuxtConfig({
     experimental: {
       tasks: true,
     },
+  },
+
+  experimental: {
+    payloadExtraction: true,
+    sharedPrerenderData: true,
+    renderJsonPayloads: true,
   },
 
   hub: {
@@ -99,6 +110,15 @@ export default defineNuxtConfig({
     auth: {
       user: process.env.NUXT_NODEMAILER_USER || 'cliford.pereira@gmail.com',
       pass: process.env.NUXT_NODEMAILER_AUTH_PASS || '',
+    },
+  },
+  delayHydration: {
+    mode: 'mount',
+    debug: process.env.NODE_ENV === 'development'
+  },
+  security: {
+    headers: {
+      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
     },
   },
 })
