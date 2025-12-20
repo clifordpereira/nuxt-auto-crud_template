@@ -24,14 +24,10 @@
     "@vueuse/nuxt": "^13.9.0",
     "bcryptjs": "^3.0.3",
     "drizzle-orm": "^0.45.0",
-    "jspdf": "^3.0.4",
-    "jspdf-autotable": "^5.0.2",
     "nuxt": "^4.2.1",
     "nuxt-auth-utils": "^0.5.26",
     "nuxt-authorization": "^0.3.5",
     "nuxt-auto-crud": "^1.21.0",
-    "nuxt-og-image": "^5.1.12",
-    "xlsx": "^0.18.5",
     "zod": "^4.1.13"
   },
   "devDependencies": {
@@ -51,7 +47,11 @@
     "wrangler": "^3.99.0",
     "better-sqlite3": "^11.5.0",
     "nodemailer": "^6.9.16",
-    "@libsql/client": "^0.15.15"
+    "@libsql/client": "^0.15.15",
+    "jspdf": "^3.0.4",
+    "jspdf-autotable": "^5.0.2",
+    "xlsx": "^0.18.5",
+    "nuxt-og-image": "^5.1.12"
   },
   "packageManager": "bun@1.2.5"
 }

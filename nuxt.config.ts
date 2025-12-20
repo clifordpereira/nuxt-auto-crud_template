@@ -13,7 +13,6 @@ export default defineNuxtConfig({
     'nuxt-auto-crud',
     '@nuxt/content',
     '@nuxt/image',
-    'nuxt-og-image',
     '@nuxt/scripts',
     '@nuxt/fonts',
   ],
@@ -57,6 +56,7 @@ export default defineNuxtConfig({
     minify: true,
     experimental: {
       tasks: true,
+      openAPI: false,
     },
     externals: {
       external: [
