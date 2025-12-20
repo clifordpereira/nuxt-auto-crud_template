@@ -12,7 +12,6 @@ export default defineNuxtConfig({
     'nuxt-authorization',
     "nuxt-security",
     'nuxt-delay-hydration',
-    'nuxt-og-image',
     'nuxt-auto-crud',
     '@nuxt/content',
     '@nuxt/image',
@@ -117,9 +116,5 @@ export default defineNuxtConfig({
       permissionsPolicy: false,
       crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
     },
-  },
-
-  ogImage: {
-    enabled: true,
   },
 })
