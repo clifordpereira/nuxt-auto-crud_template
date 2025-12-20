@@ -10,6 +10,8 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     '@vueuse/nuxt',
     'nuxt-authorization',
+    "nuxt-security",
+    'nuxt-delay-hydration',
     'nuxt-auto-crud',
     '@nuxt/content',
     '@nuxt/image',
@@ -37,6 +39,7 @@ export default defineNuxtConfig({
         clientSecret: process.env.NUXT_OAUTH_GOOGLE_CLIENT_SECRET
       }
     },
+    emailFrom: process.env.NUXT_EMAIL_FROM || 'Nuxt Auto CRUD <noreply@auto-crud.clifland.in>',
     resendApiKey: process.env.NUXT_RESEND_API_KEY,
   },
 
@@ -61,7 +64,6 @@ export default defineNuxtConfig({
     externals: {
       external: [
         'better-sqlite3',
-        'nodemailer',
         '@libsql/client'
       ]
     }
@@ -98,6 +100,17 @@ export default defineNuxtConfig({
       googleAnalytics: {
         id: process.env.NUXT_PUBLIC_GA_ID || '',
       },
+    },
+  },
+  delayHydration: {
+    mode: 'mount',
+    debug: process.env.NODE_ENV === 'development'
+  },
+  security: {
+    headers: {
+      contentSecurityPolicy: false,
+      permissionsPolicy: false,
+      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
     },
   },
 })
