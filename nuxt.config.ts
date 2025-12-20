@@ -1,28 +1,24 @@
+import { defineNuxtConfig } from 'nuxt/config'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// Force restart
 export default defineNuxtConfig({
   modules: [
-    '@nuxt/eslint',
-    '@nuxt/image',
     '@nuxt/ui',
+    '@nuxt/eslint',
+    '@nuxthub/core',
+    'nuxt-auth-utils',
+    '@vueuse/nuxt',
+    'nuxt-authorization',
+    'nuxt-auto-crud',
     '@nuxt/content',
+    '@nuxt/image',
+    'nuxt-og-image',
     '@nuxt/scripts',
     '@nuxt/fonts',
-    "nuxt-security",
-    '@vueuse/nuxt',
-    'nuxt-og-image',
-    '@nuxthub/core',
-    'nuxt-delay-hydration',
-    'nuxt-auth-utils',
-    'nuxt-authorization',
-    'nuxt-nodemailer',
-    'nuxt-auto-crud',
   ],
 
-  ssr: true,
-
-  devtools: {
-    enabled: true,
-  },
+  devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
 
@@ -32,52 +28,35 @@ export default defineNuxtConfig({
     public: {
       crudBaseUrl: '/api',
     },
-    oauth: {
-      github: {
-        clientId: process.env.NUXT_OAUTH_GITHUB_CLIENT_ID,
-        clientSecret: process.env.NUXT_OAUTH_GITHUB_CLIENT_SECRET
-      },
-      google: {
-        clientId: process.env.NUXT_OAUTH_GOOGLE_CLIENT_ID,
-        clientSecret: process.env.NUXT_OAUTH_GOOGLE_CLIENT_SECRET
-      }
-    },
-    resendApiKey: process.env.NUXT_RESEND_API_KEY,
   },
 
-  routeRules: {
-    '/docs': { redirect: '/docs/auto-crud', prerender: false },
-    '/_ipx/**': { headers: { 'cache-control': 'max-age=31536000, public, immutable' } },
-    '/blog/**': { swr: true },
-    '/changelog/**': { swr: true },
+  future: {
+    compatibilityVersion: 4,
   },
 
   compatibilityDate: '2024-11-27',
 
-  nitro: {
-    preset: 'cloudflare_module',
-    prerender: {
-      routes: [
-        '/',
-      ],
-      crawlLinks: false,
-    },
-    experimental: {
-      tasks: true,
-    },
-    externals: {
-      external: ['better-sqlite3', 'nodemailer', '@libsql/client']
-    },
-  },
-
-  experimental: {
-    payloadExtraction: true,
-    sharedPrerenderData: true,
-    renderJsonPayloads: true,
-  },
-
   hub: {
     db: 'sqlite',
+  },
+
+  nitro: {
+    preset: 'cloudflare_module',
+    compressPublicAssets: true,
+
+    experimental: {
+      tasks: true,
+      openAPI: true,
+    },
+  },
+
+  image: {
+    domains: ['img.youtube.com', 'i.ytimg.com'],
+  },
+
+  routeRules: {
+    '/': { isr: 3600 },
+    '/docs/**': { isr: 86400 },
   },
 
   autoCrud: {
@@ -97,33 +76,11 @@ export default defineNuxtConfig({
       },
     },
   },
-  fonts: {
-    families: [
-      { name: 'Public Sans', provider: 'google' }
-    ],
-    experimental: {
-      processCSSVariables: true
-    }
-  },
-  nodemailer: {
-    from: process.env.NUXT_NODEMAILER_FROM || '"Cliford Pereira" <cliford.pereira@gmail.com>',
-    host: process.env.NUXT_NODEMAILER_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.NUXT_NODEMAILER_PORT || '465'),
-    secure: process.env.NUXT_NODEMAILER_SECURE !== 'false', // Default to true
-    auth: {
-      user: process.env.NUXT_NODEMAILER_USER || 'cliford.pereira@gmail.com',
-      pass: process.env.NUXT_NODEMAILER_AUTH_PASS || '',
-    },
-  },
-  delayHydration: {
-    mode: 'mount',
-    debug: process.env.NODE_ENV === 'development'
-  },
-  security: {
-    headers: {
-      contentSecurityPolicy: false,
-      permissionsPolicy: false,
-      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+  scripts: {
+    registry: {
+      googleAnalytics: {
+        id: process.env.NUXT_PUBLIC_GA_ID || '',
+      },
     },
   },
 })
