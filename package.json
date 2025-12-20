@@ -12,6 +12,7 @@
     "test": "vitest",
     "db:generate": "nuxt db generate",
     "start": "wrangler pages dev .output/public",
+    "deploy": "wrangler pages deploy .output/public",
     "migrate:remote": "npx wrangler d1 migrations apply nac-template-db --remote"
   },
   "dependencies": {
