@@ -150,7 +150,13 @@ CREATE TABLE `users` (
 	`password` text NOT NULL,
 	`avatar` text,
 	`role_id` integer,
+	`reset_token` text,
+	`reset_expires` integer,
+	`github_id` text,
+	`google_id` text,
 	FOREIGN KEY (`role_id`) REFERENCES `roles`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);
+CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);--> statement-breakpoint
+CREATE UNIQUE INDEX `users_github_id_unique` ON `users` (`github_id`);--> statement-breakpoint
+CREATE UNIQUE INDEX `users_google_id_unique` ON `users` (`google_id`);

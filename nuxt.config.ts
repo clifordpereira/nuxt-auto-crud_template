@@ -4,16 +4,17 @@ import { defineNuxtConfig } from 'nuxt/config'
 // Force restart
 export default defineNuxtConfig({
   modules: [
-    '@nuxt/ui',
     '@nuxt/eslint',
+    '@nuxt/image',
+    '@nuxt/ui',
+    '@nuxt/content',
+    '@vueuse/nuxt',
+    'nuxt-og-image',
     '@nuxthub/core',
     'nuxt-auth-utils',
-    '@vueuse/nuxt',
     'nuxt-authorization',
+    'nuxt-nodemailer',
     'nuxt-auto-crud',
-    '@nuxt/content',
-    '@nuxt/image',
-    'nuxt-og-image',
     '@nuxt/scripts',
     '@nuxt/fonts',
   ],
@@ -28,6 +29,17 @@ export default defineNuxtConfig({
     public: {
       crudBaseUrl: '/api',
     },
+    oauth: {
+      github: {
+        clientId: process.env.NUXT_OAUTH_GITHUB_CLIENT_ID,
+        clientSecret: process.env.NUXT_OAUTH_GITHUB_CLIENT_SECRET
+      },
+      google: {
+        clientId: process.env.NUXT_OAUTH_GOOGLE_CLIENT_ID,
+        clientSecret: process.env.NUXT_OAUTH_GOOGLE_CLIENT_SECRET
+      }
+    },
+    resendApiKey: process.env.NUXT_RESEND_API_KEY,
   },
 
   future: {
@@ -82,6 +94,16 @@ export default defineNuxtConfig({
       googleAnalytics: {
         id: process.env.NUXT_PUBLIC_GA_ID || '',
       },
+    },
+  },
+  nodemailer: {
+    from: process.env.NUXT_NODEMAILER_FROM || '"Cliford Pereira" <cliford.pereira@gmail.com>',
+    host: process.env.NUXT_NODEMAILER_HOST || 'smtp.gmail.com',
+    port: parseInt(process.env.NUXT_NODEMAILER_PORT || '465'),
+    secure: process.env.NUXT_NODEMAILER_SECURE !== 'false', // Default to true
+    auth: {
+      user: process.env.NUXT_NODEMAILER_USER || 'cliford.pereira@gmail.com',
+      pass: process.env.NUXT_NODEMAILER_AUTH_PASS || '',
     },
   },
 })
