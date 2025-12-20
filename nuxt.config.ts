@@ -55,7 +55,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-07-11',
 
   nitro: {
-    preset: 'cloudflare-pages',
+    preset: 'cloudflare_module',
     prerender: {
       routes: [
         '/',
