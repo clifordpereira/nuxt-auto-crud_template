@@ -1,13 +1,12 @@
-import { defineNuxtConfig } from 'nuxt/config'
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
-// Force restart
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/image',
     '@nuxt/ui',
     '@nuxt/content',
+    '@nuxt/scripts',
+    '@nuxt/fonts',
     '@vueuse/nuxt',
     'nuxt-og-image',
     '@nuxthub/core',
@@ -15,11 +14,13 @@ export default defineNuxtConfig({
     'nuxt-authorization',
     'nuxt-nodemailer',
     'nuxt-auto-crud',
-    '@nuxt/scripts',
-    '@nuxt/fonts',
   ],
 
-  devtools: { enabled: true },
+  ssr: true,
+
+  devtools: {
+    enabled: true,
+  },
 
   css: ['~/assets/css/main.css'],
 
@@ -42,40 +43,27 @@ export default defineNuxtConfig({
     resendApiKey: process.env.NUXT_RESEND_API_KEY,
   },
 
-  future: {
-    compatibilityVersion: 4,
+  routeRules: {
+    '/docs': { redirect: '/docs/auto-crud', prerender: false },
   },
 
-  compatibilityDate: '2024-11-27',
+  compatibilityDate: '2024-07-11',
+
+  nitro: {
+    // preset: 'cloudflare_module',
+    prerender: {
+      routes: [
+        '/',
+      ],
+      crawlLinks: true,
+    },
+    experimental: {
+      tasks: true,
+    },
+  },
 
   hub: {
     db: 'sqlite',
-  },
-
-  nitro: {
-    // preset: 'firebase_app_hosting',
-    preset: 'cloudflare_module',
-    compressPublicAssets: true,
-
-    experimental: {
-      tasks: true,
-      openAPI: true,
-    },
-    // Prevent bundling of these on the server as they are browser-only
-    alias: {
-      'jspdf': 'unenv/runtime/mock/proxy',
-      'xlsx': 'unenv/runtime/mock/proxy',
-      'jspdf-autotable': 'unenv/runtime/mock/proxy',
-    }
-  },
-
-  image: {
-    domains: ['img.youtube.com', 'i.ytimg.com'],
-  },
-
-  routeRules: {
-    '/': { isr: 3600 },
-    '/docs/**': { isr: 86400 },
   },
 
   autoCrud: {
@@ -95,15 +83,13 @@ export default defineNuxtConfig({
       },
     },
   },
-  scripts: {
-    registry: {
-      googleAnalytics: {
-        id: process.env.NUXT_PUBLIC_GA_ID || '',
-      },
-    },
-  },
-  build: {
-    transpile: ['jspdf', 'xlsx', 'jspdf-autotable']
+  fonts: {
+    families: [
+      { name: 'Public Sans', provider: 'google' }
+    ],
+    experimental: {
+      processCSSVariables: true
+    }
   },
   nodemailer: {
     from: process.env.NUXT_NODEMAILER_FROM || '"Cliford Pereira" <cliford.pereira@gmail.com>',

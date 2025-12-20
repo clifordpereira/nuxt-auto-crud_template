@@ -1,19 +1,16 @@
-// No top-level imports for client-side only libraries
-
+import * as XLSX from 'xlsx'
+import { jsPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
 
 export const useExport = () => {
-  const exportToExcel = async (data: any[], fileName: string) => {
-    const XLSX = await import('xlsx')
+  const exportToExcel = (data: any[], fileName: string) => {
     const worksheet = XLSX.utils.json_to_sheet(data)
     const workbook = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1')
     XLSX.writeFile(workbook, `${fileName}.xlsx`)
   }
 
-  const exportToPDF = async (data: any[], fileName: string, columns: string[]) => {
-    const { jsPDF } = await import('jspdf')
-    const { default: autoTable } = await import('jspdf-autotable')
-    
+  const exportToPDF = (data: any[], fileName: string, columns: string[]) => {
     const doc = new jsPDF({
       orientation: 'landscape',
       unit: 'mm',
