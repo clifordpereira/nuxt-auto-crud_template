@@ -54,11 +54,17 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'cloudflare_module',
     compressPublicAssets: true,
-
+    minify: true,
     experimental: {
       tasks: true,
-      openAPI: true,
     },
+    externals: {
+      external: [
+        'better-sqlite3',
+        'nodemailer',
+        '@libsql/client'
+      ]
+    }
   },
 
   image: {
