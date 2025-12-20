@@ -7,6 +7,15 @@ A starter template for [Nuxt Auto CRUD](https://github.com/clifordpereira/nuxt-a
 - [Report Issue](https://github.com/clifordpereira/nuxt-auto-crud/issues)
 - [Creator Website](https://www.clifland.in/)
 
+## Key Features
+
+- **🛡️ Secure Authentication**: Full session-based auth with `nuxt-auth-utils`.
+- **🌐 Social Login**: Support for Google and GitHub OAuth.
+- **🔑 Password Management**: Complete "Forgot Password" and "Reset" flow with email support.
+- **📊 Data Export**: Professional Excel and PDF exports for all CRUD tables.
+- **🔐 Dynamic RBAC**: Database-driven roles and permissions system.
+- **🚀 Cloudflare Optimization**: Pre-configured for Cloudflare Workers with optimized bundling.
+
 ## Setup
 
 Make sure to install the dependencies:

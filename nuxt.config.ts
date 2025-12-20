@@ -61,6 +61,12 @@ export default defineNuxtConfig({
       tasks: true,
       openAPI: true,
     },
+    // Prevent bundling of these on the server as they are browser-only
+    alias: {
+      'jspdf': 'unenv/runtime/mock/proxy',
+      'xlsx': 'unenv/runtime/mock/proxy',
+      'jspdf-autotable': 'unenv/runtime/mock/proxy',
+    }
   },
 
   image: {
@@ -95,6 +101,9 @@ export default defineNuxtConfig({
         id: process.env.NUXT_PUBLIC_GA_ID || '',
       },
     },
+  },
+  build: {
+    transpile: ['jspdf', 'xlsx', 'jspdf-autotable']
   },
   nodemailer: {
     from: process.env.NUXT_NODEMAILER_FROM || '"Cliford Pereira" <cliford.pereira@gmail.com>',

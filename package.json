@@ -11,7 +11,8 @@
     "typecheck": "nuxt typecheck",
     "test": "vitest",
     "db:generate": "nuxt db generate",
-    "start": "node .output/server/index.mjs"
+    "start": "node .output/server/index.mjs",
+    "migrate:remote": "npx wrangler d1 migrations apply nac-template-db --remote"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.75",
