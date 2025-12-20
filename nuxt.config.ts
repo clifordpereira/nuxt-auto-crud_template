@@ -60,7 +60,7 @@ export default defineNuxtConfig({
       routes: [
         '/',
       ],
-      crawlLinks: true,
+      crawlLinks: false,
     },
     experimental: {
       tasks: true,
@@ -118,6 +118,8 @@ export default defineNuxtConfig({
   },
   security: {
     headers: {
+      contentSecurityPolicy: false,
+      permissionsPolicy: false,
       crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
     },
   },
