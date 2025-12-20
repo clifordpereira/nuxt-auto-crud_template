@@ -52,7 +52,7 @@ export default defineNuxtConfig({
     '/changelog/**': { swr: true },
   },
 
-  compatibilityDate: '2024-07-11',
+  compatibilityDate: '2024-11-27',
 
   nitro: {
     preset: 'cloudflare_module',
