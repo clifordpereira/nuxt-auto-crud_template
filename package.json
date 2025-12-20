@@ -1,16 +1,18 @@
 {
-  "name": "playground",
+  "name": "auto-crud.clifland.in",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxi build",
-    "dev": "nuxi dev --bun",
-    "preview": "nuxi preview --bun",
-    "postinstall": "nuxi prepare",
+    "build": "NODE_OPTIONS='--max-old-space-size=8192' nuxt build",
+    "dev": "nuxt dev",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxi typecheck",
+    "typecheck": "nuxt typecheck",
     "test": "vitest",
-    "db:generate": "nuxi db generate"
+    "db:generate": "nuxt db generate",
+    "start": "node .output/server/index.mjs",
+    "migrate:remote": "npx wrangler d1 migrations apply nac-template-db --remote"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.75",
