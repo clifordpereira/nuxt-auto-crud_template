@@ -23,9 +23,6 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  site: {
-    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://auto-crud.clifland.in',
-  },
 
   runtimeConfig: {
     adminEmail: 'admin@example.com',
