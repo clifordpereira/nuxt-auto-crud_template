@@ -5,7 +5,7 @@ seo:
   description: Choose the plan that's right for you.
 navigation.icon: i-lucide-credit-card
 plans:
-  - title: Community
+  - title: Community (Free)
     description: For developers who want to build and host their own applications.
     price:
       month: $0
@@ -23,29 +23,30 @@ plans:
       - Database Schema Management
       - Community Support
       - Self-Hosted only
+      - Optional Phone/Chat Support ($25/hr)
   - title: Managed Starter
     description: Zero development fees. We build, host, and administer your custom application.
     price:
-      month: $49
-      year: $490
+      month: $5
+      year: $49
     highlight: true
     scale: true
     button:
       label: Get Started
       to: mailto:clifordpereira@gmail.com
     features:
-      - Custom App Initialization
-      - Managed Application Hosting
-      - Professional Administration
+      - Standard Setup & Deployment
+      - Managed Hosting & Backups
       - Business Data Management
       - Role-Based Access Control
-      - Daily Backups & Maintenance
-      - Email Support (48h response)
+      - Security & Version Updates
+      - Platform Health Support
+      - Optional Phone/Chat Support ($25/hr)
   - title: Managed Pro
-    description: Active evolution and comprehensive administration of your custom application.
+    description: Advanced cloud hosting leveraging edge computing for performance, scalability, and low-latency applications.
     price:
-      month: $99
-      year: $990
+      month: $10
+      year: $99
     button:
       label: Contact Sales
       color: neutral
@@ -53,31 +54,31 @@ plans:
       to: mailto:clifordpereira@gmail.com
     features:
       - Everything in Starter
-      - Priority App Administration
+      - Priority Maintenance
       - Performance Monitoring
-      - Routine Feature Tweaks
-      - Dedicated Slack/Discord Channel
-      - Professional Export Setup
-
+      - Priority Email Support
+      - Advanced Data Exports
+      - Edge Computing via Cloudflare Workers
+      - Optional Phone/Chat Support ($25/hr)
 faq:
   title: Frequently asked questions
   description: Everything you need to know about Nuxt Auto CRUD.
   items:
     - label: Which databases are supported?
-      content: We have currently tested Auto Crud with SQLite only. Support for other Drizzle ORM compatible databases will be added in future updates.
+      content: Currently, Auto Crud is tested with SQLite only. Support for other Drizzle ORM compatible databases will be added in future updates.
     - label: Can I create custom features?
-      content: Yes! The built-in features are suitable for most data management tasks. You can leverage them for standard operations, and for things like reports or custom dashboards, we can build custom views exactly as your business needs.
+      content: Yes! The built-in features cover most data management tasks. For reports, dashboards, or custom workflows, we can implement features tailored to your business needs.
     - label: How is user sign-in and security handled?
-      content: We use enterprise-grade session management and secure logins. We also support multi-step verification and social logins (like Google or GitHub) to ensure your business data is only accessible by authorized users.
+      content: We use enterprise-grade session management and secure logins, including multi-step verification and social logins (Google/GitHub) to protect your business data.
     - label: How do I go from idea to production?
-      content: Check out our Quick Start Guide in the documentation (link in header) for a step-by-step workflow.
+      content: Follow our Quick Start Guide in the documentation (link in header) for a step-by-step workflow.
     - label: Can I use it with existing projects?
-      content: Yes, you can add Auto Crud to any existing Nuxt project. Check out the Installation Guide in the documentation (link in header) to get started.
+      content: Auto Crud can be integrated into any existing Nuxt project. Check the Installation Guide in the documentation to get started.
     - label: Do you charge for development?
-      content: No. Our managed plans are based on a subscription model where we handle the initial custom application setup, hosting, and ongoing administration for a flat monthly or yearly fee.
+      content: No. Managed plans are subscription-based and include initial setup, hosting, and ongoing administration for a flat monthly or yearly fee.
     - label: Can I move from Community to a Managed plan?
-      content: Absolutely. If you've started with the open-source version and want us to take over the administration, hosting, and maintenance of your application, we can migrate your setup seamlessly.
+      content: Absolutely. We can migrate your self-hosted setup to a Managed plan seamlessly, handling administration, hosting, and maintenance.
     - label: Is my application data secure?
-      content: Security and administration are at the core of our managed plans. We handle all software security patches, provide encrypted database environments, and perform daily backups to ensure your application remains healthy and safe.
+      content: Managed plans ensure security and stability. We handle software updates, encrypted database environments, and daily backups to keep your data safe.
     - label: How do I request new features?
-      content: Our 'Managed Pro' plan is designed for applications that need active evolution. It includes routine feature tweaks as part of the administration service. For major architectural changes, we can discuss how to incorporate them into your managed plan. Contact clifordpereira@gmail.com for more details.
+      content: Managed Pro is designed for applications that need active evolution. It includes routine feature tweaks as part of the administration service. For major architectural changes, contact clifordpereira@gmail.com for details.
