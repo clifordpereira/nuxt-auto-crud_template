@@ -13,8 +13,9 @@ A starter template for [Nuxt Auto CRUD](https://github.com/clifordpereira/nuxt-a
 - **🌐 Social Login**: Support for Google and GitHub OAuth.
 - **🔑 Password Management**: Complete "Forgot Password" and "Reset" flow with email support.
 - **📊 Data Export**: Professional Excel and PDF exports for all CRUD tables.
-- **🔐 Dynamic RBAC**: Database-driven roles and permissions system.
-- **🚀 Cloudflare Optimization**: Pre-configured for Cloudflare Workers with optimized bundling.
+- 🔐 **Dynamic RBAC**: Database-driven roles and permissions system.
+- 📝 **Column & Resource Control**: Control field visibility globally or per-resource, similar to Laravel API Resources.
+- 🚀 **Cloudflare Optimization**: Pre-configured for Cloudflare Workers with optimized bundling.
 
 ## Setup
 
@@ -90,6 +91,29 @@ For a detailed guide on managing permissions, see [PERMISSIONS.md](PERMISSIONS.m
 
 ### Public Access:
 Public (unauthenticated) access is controlled by the `public` role in the database. Assign permissions to the `public` role to allow access to resources for non-logged-in users.
+
+## Resource & Column Control
+
+Similar to **Laravel API Resources**, you can control which columns are revealed to the UI and exports. This is configured in `app/app.config.ts`:
+
+- **`globalHide`**: Columns to always hide from the UI tables (e.g., `updatedAt`, `deletedAt`, `createdBy`). *Note: Sensitive fields like `password` are already hidden by the module.*
+- **`exports.pdf.globalExclude`**: Columns to exclude from all PDF exports.
+- **`exports.pdf.resourceExclude`**: Resource-specific column exclusions for PDF.
+- **`exports.excel.resourceExclude`**: Resource-specific column exclusions for Excel.
+
+Example:
+```typescript
+crud: {
+  globalHide: ['password', 'resetToken'],
+  exports: {
+    pdf: {
+      resourceExclude: {
+        users: ['avatar', 'googleId'],
+      },
+    },
+  },
+}
+```
 
 ## Database Reset & Seeding
 
