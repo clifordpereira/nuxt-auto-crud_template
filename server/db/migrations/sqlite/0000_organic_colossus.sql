@@ -24,12 +24,12 @@ CREATE TABLE `comments` (
 	`content` text NOT NULL,
 	`resource_type` text NOT NULL,
 	`resource_id` integer NOT NULL,
-	`user_id` integer,
+	`author_id` integer,
 	`author_name` text,
 	`author_email` text,
 	`rating` integer,
 	`is_approved` integer DEFAULT false,
-	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`author_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE INDEX `resource_idx` ON `comments` (`resource_type`,`resource_id`);--> statement-breakpoint
