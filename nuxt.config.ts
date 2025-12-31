@@ -101,6 +101,9 @@ export default defineNuxtConfig({
       googleAnalytics: {
         id: process.env.NUXT_PUBLIC_GA_ID || '',
       },
+      googleTagManager: {
+        id: process.env.NUXT_PUBLIC_ADS_ID || '',
+      }
     },
   },
   delayHydration: {
