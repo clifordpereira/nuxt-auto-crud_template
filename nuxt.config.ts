@@ -10,25 +10,24 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     '@vueuse/nuxt',
     'nuxt-authorization',
-    "nuxt-security",
+    'nuxt-security',
     'nuxt-delay-hydration',
     'nuxt-auto-crud',
     '@nuxt/content',
     '@nuxt/image',
     '@nuxt/scripts',
-    '@nuxt/fonts',
+    '@nuxt/fonts'
   ],
 
   devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
 
-
   runtimeConfig: {
     adminEmail: 'admin@example.com',
     adminPassword: '$1Password',
     public: {
-      crudBaseUrl: '/api',
+      crudBaseUrl: '/api'
     },
     oauth: {
       github: {
@@ -41,18 +40,19 @@ export default defineNuxtConfig({
       }
     },
     emailFrom: process.env.NUXT_EMAIL_FROM || 'Nuxt Auto CRUD <noreply@auto-crud.clifland.in>',
-    resendApiKey: process.env.NUXT_RESEND_API_KEY,
+    resendApiKey: process.env.NUXT_RESEND_API_KEY
+  },
+
+  routeRules: {
+    '/': { isr: 3600 },
+    '/docs/**': { isr: 86400 }
   },
 
   future: {
-    compatibilityVersion: 4,
+    compatibilityVersion: 4
   },
 
   compatibilityDate: '2024-11-27',
-
-  hub: {
-    db: 'sqlite',
-  },
 
   nitro: {
     preset: 'cloudflare_module',
@@ -60,7 +60,7 @@ export default defineNuxtConfig({
     minify: true,
     experimental: {
       tasks: true,
-      openAPI: false,
+      openAPI: false
     },
     externals: {
       external: [
@@ -70,13 +70,8 @@ export default defineNuxtConfig({
     }
   },
 
-  image: {
-    domains: ['img.youtube.com', 'i.ytimg.com'],
-  },
-
-  routeRules: {
-    '/': { isr: 3600 },
-    '/docs/**': { isr: 86400 },
+  hub: {
+    db: 'sqlite'
   },
 
   autoCrud: {
@@ -84,37 +79,41 @@ export default defineNuxtConfig({
     auth: {
       type: 'session',
       authentication: true,
-      authorization: true,
-    },
+      authorization: true
+    }
+  },
+  delayHydration: {
+    mode: 'mount',
+    debug: process.env.NODE_ENV === 'development'
   },
 
   eslint: {
     config: {
       stylistic: {
         commaDangle: 'never',
-        braceStyle: '1tbs',
-      },
-    },
+        braceStyle: '1tbs'
+      }
+    }
+  },
+
+  image: {
+    domains: ['img.youtube.com', 'i.ytimg.com']
   },
   scripts: {
     registry: {
       googleAnalytics: {
-        id: process.env.NUXT_PUBLIC_GA_ID || '',
+        id: process.env.NUXT_PUBLIC_GA_ID || ''
       },
       googleTagManager: {
-        id: process.env.NUXT_PUBLIC_ADS_ID || '',
+        id: process.env.NUXT_PUBLIC_ADS_ID || ''
       }
-    },
-  },
-  delayHydration: {
-    mode: 'mount',
-    debug: process.env.NODE_ENV === 'development'
+    }
   },
   security: {
     headers: {
       contentSecurityPolicy: false,
       permissionsPolicy: false,
-      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
-    },
-  },
+      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp'
+    }
+  }
 })
