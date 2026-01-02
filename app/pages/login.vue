@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
@@ -13,6 +14,7 @@ useSeoMeta({
 
 const toast = useToast()
 const route = useRoute()
+const { isGitHubLoginEnabled, isGoogleLoginEnabled, isPasswordResetEnabled } = useAppFeatures()
 
 const fields = [{
   name: 'email',
@@ -33,15 +35,19 @@ const fields = [{
 
 const { fetch } = useUserSession()
 
-const providers = [{
+const allProviders = [{
   label: 'Google',
   icon: 'i-simple-icons-google',
-  onClick: () => { window.location.href = '/auth/google' }
+  onClick: () => { window.location.href = '/auth/google' },
+  enabled: isGoogleLoginEnabled
 }, {
   label: 'GitHub',
   icon: 'i-simple-icons-github',
-  onClick: () => { window.location.href = '/auth/github' }
+  onClick: () => { window.location.href = '/auth/github' },
+  enabled: isGitHubLoginEnabled
 }]
+
+const providers = computed(() => allProviders.filter(p => p.enabled))
 
 const schema = z.object({
   email: z.string().email('Invalid email'),
@@ -99,13 +105,14 @@ watchEffect(() => {
   >
     <template #description>
       Don't have an account? <ULink
-        to="/"
+        to="/signup"
         class="text-primary font-medium"
       >Sign up</ULink>.
     </template>
 
     <template #password-hint>
       <ULink
+        v-if="isPasswordResetEnabled"
         to="/auth/forgot-password"
         class="text-primary font-medium"
         tabindex="-1"

@@ -39,7 +39,9 @@ export default defineNuxtConfig({
         clientSecret: process.env.NUXT_OAUTH_GOOGLE_CLIENT_SECRET
       }
     },
-    emailFrom: process.env.NUXT_EMAIL_FROM || 'Nuxt Auto CRUD <noreply@auto-crud.clifland.in>',
+    emailFrom:
+      process.env.NUXT_EMAIL_FROM
+      || 'Nuxt Auto CRUD <noreply@auto-crud.clifland.in>',
     resendApiKey: process.env.NUXT_RESEND_API_KEY
   },
 
@@ -55,7 +57,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-27',
 
   nitro: {
-    preset: 'cloudflare_module',
+    // preset: 'cloudflare_module',
     compressPublicAssets: true,
     minify: true,
     experimental: {
@@ -63,10 +65,7 @@ export default defineNuxtConfig({
       openAPI: false
     },
     externals: {
-      external: [
-        'better-sqlite3',
-        '@libsql/client'
-      ]
+      external: ['better-sqlite3', '@libsql/client']
     }
   },
 
@@ -113,7 +112,8 @@ export default defineNuxtConfig({
     headers: {
       contentSecurityPolicy: false,
       permissionsPolicy: false,
-      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp'
+      crossOriginEmbedderPolicy:
+        process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp'
     }
   }
 })

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
@@ -12,6 +13,7 @@ useSeoMeta({
 })
 
 const toast = useToast()
+const { isGitHubLoginEnabled, isGoogleLoginEnabled } = useAppFeatures()
 
 const fields = [{
   name: 'name',
@@ -31,15 +33,19 @@ const fields = [{
 }]
 const { fetch } = useUserSession()
 
-const providers = [{
+const allProviders = [{
   label: 'Google',
   icon: 'i-simple-icons-google',
-  onClick: () => { window.location.href = '/auth/google' }
+  onClick: () => { window.location.href = '/auth/google' },
+  enabled: isGoogleLoginEnabled
 }, {
   label: 'GitHub',
   icon: 'i-simple-icons-github',
-  onClick: () => { window.location.href = '/auth/github' }
+  onClick: () => { window.location.href = '/auth/github' },
+  enabled: isGitHubLoginEnabled
 }]
+
+const providers = computed(() => allProviders.filter(p => p.enabled))
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
