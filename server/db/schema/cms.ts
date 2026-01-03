@@ -14,7 +14,5 @@ export const posts = sqliteTable('posts', {
   categoryId: integer('category_id').references(() => categories.id),
   isPublished: integer('is_published', { mode: 'boolean' }).default(false),
   status: text('status', { enum: ['draft', 'published', 'archived'] }).default('draft'),
-  publishedAt: integer('published_at', { mode: 'timestamp' }),
+  publishedAt: integer('published_at', { mode: 'timestamp' })
 })
-
-
