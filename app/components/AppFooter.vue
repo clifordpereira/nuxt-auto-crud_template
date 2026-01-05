@@ -27,7 +27,7 @@ const columns = [{
     target: '_blank'
   }, {
     label: 'Discuss on Discord',
-    to: 'https://discord.gg/hGgyEaGu',
+    to: 'https://discord.gg/FBkQQfRFJM',
     target: '_blank'
   }, {
     label: 'GitHub Discussions',
@@ -170,7 +170,7 @@ async function onSubmit() {
 
     <template #right>
       <UButton
-        to="https://discord.gg/hGgyEaGu"
+        to="https://discord.gg/FBkQQfRFJM"
         target="_blank"
         icon="i-simple-icons-discord"
         aria-label="Auto Crud on Discord"
