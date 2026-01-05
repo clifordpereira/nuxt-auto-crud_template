@@ -1,10 +1,11 @@
 title: Instant CRUD APIs for [Nuxt]{class="text-primary"}
-description: Concentrate on system design, schemas, and permissions—not repetitive CRUD code. Write your Drizzle schemas and your APIs are instantly available. Fine-tune resource and column exposure in app.config.ts or through the admin panel.
+description: No more need to write or generate CRUD code. nuxt-auto-crud dynamically exposes CRUD APIs directly from your Drizzle schemas. You can control resource and column visibility through app.config.ts or the admin panel.
 seo:
   title: Nuxt Auto CRUD - Instant APIs from Drizzle Schema
   description: Automatically expose RESTful CRUD APIs from your Drizzle ORM schema. Focus on your business logic, not boilerplate code.
 navigation: false
 command: npx nuxi init -t gh:clifordpereira/nuxt-auto-crud_template <project-name>
+commandNote: 'Add env var NUXT_SESSION_PASSWORD="a-random-string-of-at-least-32-characters-long"'
 hero:
   links:
     - label: Documentation
@@ -114,19 +115,14 @@ features:
     - title: Zero Code Generation
       description: Unlike other CRUD tools, no code bloat. One set of code handles unlimited tables through smart routing.
       icon: i-lucide-zap
+    - title: Smart Relation Handling
+      description: Foreign keys automatically display related data (names, titles) in the admin panel. Define relations in Drizzle and APIs handle them seamlessly.
+      icon: i-lucide-link
 
 testimonials:
-  headline: Trusted by Developers
-  title: Join Developers Building with Nuxt Auto CRUD
-  description: See why developers choose Nuxt Auto CRUD to ship their SaaS applications faster and with more confidence.
-  items:
-    - quote: I built Nuxt Auto CRUD to make development efficient. If you find it useful, I'd love to hear your feedback and feature it here! Send your testimonials to clifordpereira@gmail.com.
-      user:
-        name: Cliford Pereira
-        description: Author of Nuxt Auto CRUD
-        avatar:
-          src: https://github.com/clifordpereira.png
-
+  headline: Your Voice Matters
+  title: Help Us Showcase Real Developer Stories
+  description: Tell us about your experience. Your testimonial helps other developers make confident decisions.
 
 cta:
   title: Ready to speed up your development?

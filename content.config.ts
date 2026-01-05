@@ -38,6 +38,7 @@ export const collections = {
     type: 'page',
     schema: z.object({
       command: z.string().optional(),
+      commandNote: z.string().optional(),
       hero: z.object(({
         links: z.array(createLinkSchema())
       })),

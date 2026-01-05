@@ -160,20 +160,12 @@ async function onSubmit() {
 
     <template #left>
       <p class="text-muted text-sm">
-        Built with ❤️ using <NuxtLink
-          to="https://antigravity.google/"
-          target="_blank"
-          class="hover:text-primary"
-        >AntiGravity IDE</NuxtLink>
-      </p>
-
-      <div class="absolute left-1/2 -translate-x-1/2 text-muted text-sm hidden sm:block">
-        Built by <NuxtLink
+       Built by <NuxtLink
           to="https://clifland.in"
           target="_blank"
           class="hover:text-primary"
         >Clifland</NuxtLink>
-      </div>
+      </p>
     </template>
 
     <template #right>
