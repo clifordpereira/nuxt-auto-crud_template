@@ -122,8 +122,9 @@ export default defineNuxtConfig({
     headers: {
       contentSecurityPolicy: false,
       permissionsPolicy: false,
-      crossOriginEmbedderPolicy:
-        process.env.NODE_ENV === "development" ? "unsafe-none" : "require-corp",
+      crossOriginEmbedderPolicy: false,
+      crossOriginOpenerPolicy: false,
+      referrerPolicy: "no-referrer-when-downgrade",
     },
   },
 });
