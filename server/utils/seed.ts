@@ -82,6 +82,30 @@ export const seedDatabase = async () => {
     }
   }
 
+  // Helper function to assign a permission if it doesn't exist
+  const assignPermission = async (roleId: number, resourceId: number, permCode: string) => {
+    const pId = permissionIds[permCode]
+    if (!pId) return
+
+    const existing = await db.select().from(schema.roleResourcePermissions)
+      .where(and(
+        eq(schema.roleResourcePermissions.roleId, roleId),
+        eq(schema.roleResourcePermissions.resourceId, resourceId),
+        eq(schema.roleResourcePermissions.permissionId, pId)
+      ))
+      .get()
+
+    if (!existing) {
+      await db.insert(schema.roleResourcePermissions).values({
+        roleId,
+        resourceId,
+        permissionId: pId,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
+    }
+  }
+
   // 4. ASSIGN PERMISSIONS DYNAMICALLY
   for (const roleName of rolesToSeed) {
     // Admin usually bypasses or gets all; Public gets nothing by default
@@ -103,26 +127,25 @@ export const seedDatabase = async () => {
       }
 
       for (const permCode of permsToAssign) {
-        const pId = permissionIds[permCode]
-        if (pId) {
-          const existing = await db.select().from(schema.roleResourcePermissions)
-            .where(and(
-              eq(schema.roleResourcePermissions.roleId, rId),
-              eq(schema.roleResourcePermissions.resourceId, resId),
-              eq(schema.roleResourcePermissions.permissionId, pId)
-            ))
-            .get()
+        await assignPermission(rId, resId, permCode)
+      }
+    }
+  }
 
-          if (!existing) {
-            await db.insert(schema.roleResourcePermissions).values({
-              roleId: rId,
-              resourceId: resId,
-              permissionId: pId,
-              createdAt: new Date(),
-              updatedAt: new Date()
-            })
-          }
-        }
+  // 4a. ASSIGN PUBLIC PERMISSIONS
+  const publicRoleId = roleIds.public
+  if (publicRoleId) {
+    const publicGrants: Record<string, string[]> = {
+      testimonials: ['list', 'read', 'create'],
+      subscribers: ['create']
+    }
+
+    for (const [resourceName, perms] of Object.entries(publicGrants)) {
+      const resId = resourceIds[resourceName]
+      if (!resId) continue
+
+      for (const permCode of perms) {
+        await assignPermission(publicRoleId, resId, permCode)
       }
     }
   }
