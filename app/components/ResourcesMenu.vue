@@ -12,7 +12,7 @@ const { hasPermission } = usePermissions()
 const resourceNames = computed(() =>
   Object.keys(schemas.value || {}).filter((name) => {
     // Exclude system tables
-    if (['users', 'roles', 'permissions', 'resources', 'roleResourcePermissions'].includes(name)) return false
+    if (['users', 'roles', 'permissions', 'resources', 'roleResourcePermissions', 'testimonials', 'subscribers'].includes(name)) return false
 
     return hasPermission(name, 'list')
   }).sort((a, b) => b.localeCompare(a))
