@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const { data: page } = await useAsyncData('index', () => queryCollection('index').first())
 
+const { copy, copied } = useClipboard()
+
 const title = page.value?.seo?.title || page.value?.title
 const description = page.value?.seo?.description || page.value?.description
 
@@ -31,8 +33,42 @@ useSeoMeta({
         />
       </template>
 
+      <template #description>
+        {{ page.description }}
+        <div v-if="page.command" class="flex items-center gap-3 bg-gray-100/50 dark:bg-gray-900/50 p-1 rounded-md border border-gray-200 dark:border-gray-800 w-fit mx-auto mt-6 mb-2">
+          <UBadge
+            label="Quick Install"
+            variant="subtle"
+            size="sm"
+            class="rounded"
+          />
+          <code class="text-[11px] font-mono text-muted-foreground">{{ page.command }}</code>
+          <UButton
+            :icon="copied ? 'i-lucide-check' : 'i-lucide-copy'"
+            color="neutral"
+            variant="ghost"
+            size="xs"
+            @click="copy(page.command)"
+          />
+        </div>
+      </template>
+
       <PromotionalVideo />
     </UPageHero>
+    
+    <UPageSection
+      :title="page.features.title"
+      :description="page.features.description"
+    >
+      <UPageGrid>
+        <UPageCard
+          v-for="(item, index) in page.features.items"
+          :key="index"
+          v-bind="item"
+          spotlight
+        />
+      </UPageGrid>
+    </UPageSection>
 
     <UPageSection
       v-for="(section, index) in page.sections"
@@ -57,20 +93,6 @@ useSeoMeta({
         loading="lazy"
       />
       <ImagePlaceholder v-else />
-    </UPageSection>
-
-    <UPageSection
-      :title="page.features.title"
-      :description="page.features.description"
-    >
-      <UPageGrid>
-        <UPageCard
-          v-for="(item, index) in page.features.items"
-          :key="index"
-          v-bind="item"
-          spotlight
-        />
-      </UPageGrid>
     </UPageSection>
 
     <UPageSection
