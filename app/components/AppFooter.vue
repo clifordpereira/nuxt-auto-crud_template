@@ -19,7 +19,7 @@ const columns = [{
   label: 'Community',
   children: [{
     label: 'GitHub Repo',
-    to: 'https://github.com/clifordpereira/nuxt-auto-crud',
+    to: 'https://github.com/clifordpereira/nuxt-auto-crud_template',
     target: '_blank',
   }, {
     label: 'NPM Package',
@@ -42,26 +42,34 @@ const columns = [{
   label: 'YouTube',
   children: [{
     label: 'Installation',
-    to: 'https://youtu.be/M9-koXmhB9k',
+    to: 'https://www.youtube.com/watch?v=lpS6qUZGi_g',
+    target: '_blank',
+  }, {
+    label: 'Demo Data',
+    to: 'https://www.youtube.com/watch?v=GRIowfYv_vY',
     target: '_blank',
   }, {
     label: 'Add Schema',
-    to: 'https://youtu.be/7gW0KW1KtN0',
+    to: 'https://www.youtube.com/watch?v=_XiWoYNZRvo',
     target: '_blank',
   }, {
-    label: 'Permissions',
-    to: 'https://www.youtube.com/watch?v=Yty3OCYbwOo',
+    label: 'Permissions (RBAC)',
+    to: 'https://www.youtube.com/watch?v=-eOGunnerM0',
     target: '_blank',
   }, {
-    label: 'RBAC Demo',
-    to: 'https://www.youtube.com/watch?v=W0ju4grRC9M',
+    label: 'Deployment',
+    to: 'https://www.youtube.com/watch?v=0x2FC3V_vNU',
+    target: '_blank',
+  }, {
+    label: 'Environment Variable',
+    to: 'https://www.youtube.com/watch?v=tnSalaiTXjw',
     target: '_blank',
   }],
 }, {
   label: 'Modules Used',
   children: [{
     label: 'Auto Crud',
-    to: 'https://www.npmjs.com/package/nuxt-auto-crud',
+    to: 'https://github.com/clifordpereira/nuxt-auto-crud',
     target: '_blank',
   }, {
     label: 'Drizzle ORM',
@@ -180,7 +188,7 @@ async function onSubmit() {
         variant="ghost"
       />
       <UButton
-        to="https://github.com/clifordpereira/nuxt-auto-crud"
+        to="https://github.com/clifordpereira/nuxt-auto-crud_template"
         target="_blank"
         icon="i-simple-icons-github"
         aria-label="Auto Crud on GitHub"
