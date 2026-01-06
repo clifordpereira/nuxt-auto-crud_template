@@ -14,8 +14,8 @@ const resourceNames = computed(() =>
     // Exclude system tables
     if (['users', 'roles', 'permissions', 'resources', 'roleResourcePermissions', 'testimonials', 'subscribers'].includes(name)) return false
 
-    return hasPermission(name, 'list')
-  }).sort((a, b) => b.localeCompare(a))
+    return hasPermission(name, 'list') || hasPermission(name, 'list_own')
+  }).sort((a, b) => b.localeCompare(a)),
 )
 
 const items = computed(() => {
@@ -28,8 +28,8 @@ const items = computed(() => {
     children: resourceNames.value.map(resource => ({
       label: resource.charAt(0).toUpperCase() + resource.slice(1),
       to: `/admin/${resource}`,
-      onSelect: props.onSelect
-    }))
+      onSelect: props.onSelect,
+    })),
   }] satisfies NavigationMenuItem[]
 })
 </script>

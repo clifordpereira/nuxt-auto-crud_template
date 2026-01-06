@@ -1,5 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { useChangeCase } from '@vueuse/integrations/useChangeCase'
 
@@ -24,8 +25,21 @@ const emit = defineEmits<{
 
 // filter out system fields
 const filteredFields = props.schema.fields.filter(
-  field => !['id', 'created_at', 'updated_at', 'deleted_at', 'createdAt', 'updatedAt', 'deletedAt', 'created_by', 'updated_by', 'createdBy', 'updatedBy'].includes(field.name)
+  (field) => {
+    const isSystem = ['id', 'created_at', 'updated_at', 'deleted_at', 'createdAt', 'updatedAt', 'deletedAt', 'created_by', 'updated_by', 'createdBy', 'updatedBy'].includes(field.name)
+    if (isSystem) return false
+    // Hide status during creation
+    if (field.name === 'status' && !props.initialState) return false
+    return true
+  },
 )
+
+const { user } = useUserSession()
+
+const canUpdateStatus = computed(() => {
+  const userPerms = (user.value as any)?.permissions?.[props.schema.resource] as string[] | undefined
+  return user.value?.role === 'admin' || (Array.isArray(userPerms) && userPerms.includes('update_status'))
+})
 
 // dynamically build zod schema
 const formSchema = useDynamicZodSchema(filteredFields, !!props.initialState)
@@ -40,7 +54,8 @@ const state = reactive<Record<string, unknown>>(
       // Case 1: value is an object with id (e.g. customer_id: { id: 1, ... })
       if ((field.name.endsWith('_id') || field.name.endsWith('Id')) && value && typeof value === 'object' && 'id' in value) {
         value = (value as { id: unknown }).id
-      } else if ((field.name.endsWith('_id') || field.name.endsWith('Id')) && value === undefined) {
+      }
+      else if ((field.name.endsWith('_id') || field.name.endsWith('Id')) && value === undefined) {
         const relationName = field.name.endsWith('_id') ? field.name.replace('_id', '') : field.name.replace('Id', '')
         const relationValue = props.initialState?.[relationName]
         if (relationValue && typeof relationValue === 'object' && 'id' in relationValue) {
@@ -51,8 +66,8 @@ const state = reactive<Record<string, unknown>>(
       acc[field.name] = value ?? (field.type === 'boolean' ? false : undefined)
       return acc
     },
-    {} as Record<string, unknown>
-  )
+    {} as Record<string, unknown>,
+  ),
 )
 
 // processedFields with capitalized label for display
@@ -61,15 +76,16 @@ const processedFields = computed(() =>
     let label = field.name
     if (label.endsWith('_id')) {
       label = label.replace('_id', '')
-    } else if (label.endsWith('Id')) {
+    }
+    else if (label.endsWith('Id')) {
       label = label.replace('Id', '')
     }
     label = useChangeCase(label, 'capitalCase').value
     return {
       ...field,
-      label
+      label,
     }
-  })
+  }),
 )
 
 function handleSubmit(event: FormSubmitEvent<Record<string, unknown>>) {
@@ -136,6 +152,7 @@ function handleSubmit(event: FormSubmitEvent<Record<string, unknown>>) {
             :items="field.selectOptions"
             placeholder="Select "
             class="w-full"
+            :disabled="field.name === 'status' && !canUpdateStatus"
           />
 
           <UTextarea
@@ -150,6 +167,7 @@ function handleSubmit(event: FormSubmitEvent<Record<string, unknown>>) {
             v-model="state[field.name] as string"
             :type="field.type"
             :required="field.required"
+            :disabled="field.name === 'status' && !canUpdateStatus"
           />
         </UFormField>
       </template>
