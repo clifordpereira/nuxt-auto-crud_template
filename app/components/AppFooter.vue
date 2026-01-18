@@ -2,11 +2,12 @@
 const columns = [{
   label: 'Resources',
   children: [{
-    label: 'Docs',
-    to: '/docs/auto-crud',
-  }, {
-    label: 'Template',
+    label: 'GitHub Repo',
     to: 'https://github.com/clifordpereira/nuxt-auto-crud_template',
+    target: '_blank',
+  }, {
+    label: 'Core NPM Package',
+    to: 'https://www.npmjs.com/package/nuxt-auto-crud',
     target: '_blank',
   }, {
     label: 'Changelog',
@@ -16,16 +17,35 @@ const columns = [{
     to: '/blog',
   }],
 }, {
+  label: 'YouTube Demos',
+  children: [{
+    label: 'Installation',
+    to: 'https://www.youtube.com/watch?v=_o0cddJUU50&list=PLnbvxcojhIixqM1J08Tnm7vmMdx2wsy4B&index=1',
+    target: '_blank',
+  }, {
+    label: 'Demo Data',
+    to: 'https://www.youtube.com/watch?v=AXQKByqMOJc&list=PLnbvxcojhIixqM1J08Tnm7vmMdx2wsy4B&index=2',
+    target: '_blank',
+  }, {
+    label: 'Add Schema',
+    to: 'https://www.youtube.com/watch?v=33-HBFfGfA4&list=PLnbvxcojhIixqM1J08Tnm7vmMdx2wsy4B&index=3',
+    target: '_blank',
+  }, {
+    label: 'Permissions (RBAC)',
+    to: 'https://www.youtube.com/watch?v=Ot3qMzWe4OU&list=PLnbvxcojhIixqM1J08Tnm7vmMdx2wsy4B&index=4',
+    target: '_blank',
+  }, {
+    label: 'Deployment',
+    to: 'https://www.youtube.com/watch?v=bbuKgfV-I44&list=PLnbvxcojhIixqM1J08Tnm7vmMdx2wsy4B&index=5',
+    target: '_blank',
+  }, {
+    label: 'Environment Variable',
+    to: 'https://www.youtube.com/watch?v=bh5EkArlb-E&list=PLnbvxcojhIixqM1J08Tnm7vmMdx2wsy4B&index=6',
+    target: '_blank',
+  }],
+}, {
   label: 'Community',
   children: [{
-    label: 'GitHub Repo',
-    to: 'https://github.com/clifordpereira/nuxt-auto-crud_template',
-    target: '_blank',
-  }, {
-    label: 'NPM Package',
-    to: 'https://www.npmjs.com/package/nuxt-auto-crud',
-    target: '_blank',
-  }, {
     label: 'Discuss on Discord',
     to: 'https://discord.gg/FBkQQfRFJM',
     target: '_blank',
@@ -39,36 +59,9 @@ const columns = [{
     target: '_blank',
   }],
 }, {
-  label: 'YouTube',
-  children: [{
-    label: 'Installation',
-    to: 'https://www.youtube.com/watch?v=lpS6qUZGi_g',
-    target: '_blank',
-  }, {
-    label: 'Demo Data',
-    to: 'https://www.youtube.com/watch?v=GRIowfYv_vY',
-    target: '_blank',
-  }, {
-    label: 'Add Schema',
-    to: 'https://www.youtube.com/watch?v=_XiWoYNZRvo',
-    target: '_blank',
-  }, {
-    label: 'Permissions (RBAC)',
-    to: 'https://www.youtube.com/watch?v=-eOGunnerM0',
-    target: '_blank',
-  }, {
-    label: 'Deployment',
-    to: 'https://www.youtube.com/watch?v=0x2FC3V_vNU',
-    target: '_blank',
-  }, {
-    label: 'Environment Variable',
-    to: 'https://www.youtube.com/watch?v=tnSalaiTXjw',
-    target: '_blank',
-  }],
-}, {
   label: 'Modules Used',
   children: [{
-    label: 'Auto Crud',
+    label: 'Nuxt Auto Crud',
     to: 'https://github.com/clifordpereira/nuxt-auto-crud',
     target: '_blank',
   }, {
