@@ -15,7 +15,7 @@ const isLoaded = ref(false)
         @click="isLoaded = true"
       >
         <NuxtImg
-          src="https://img.youtube.com/vi/W0ju4grRC9M/maxresdefault.jpg"
+          src="https://img.youtube.com/vi/Ot3qMzWe4OU/maxresdefault.jpg"
           alt="Promotional Video"
           class="w-full h-full object-cover rounded-xl"
           loading="lazy"
