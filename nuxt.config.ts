@@ -83,15 +83,14 @@ export default defineNuxtConfig({
       openAPI: false,
     },
     externals: {
-      external: ['better-sqlite3', '@libsql/client'],
+      external: ['better-sqlite3', '@libsql/client', 'xlsx'],
     },
-    // Crucial: Use 'unenv' to kill Node polyfills that cause build hangs
     alias: {
-      'node:crypto': 'unenv/runtime/node/crypto/index',
-      'node:stream/web': 'unenv/runtime/node/stream/web/index',
-      'node:events': 'unenv/runtime/node/events/index',
-      'node:stream': 'unenv/runtime/node/stream/index'
-    },
+      'node:crypto': 'crypto',
+      'node:stream/web': 'stream/web',
+      'node:events': 'events',
+      'node:stream': 'stream'
+    }
   },
 
   hub: {
