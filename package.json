@@ -11,8 +11,9 @@
     "test": "vitest",
     "db:generate": "nuxt db generate",
     "start": "node .output/server/index.mjs",
-    "migrate:remote": "npx wrangler d1 migrations apply nac-template-db --remote",
-    "migrate:remote-staging": "npx wrangler d1 migrations apply DB --env staging --remote"
+    "migrate:staging": "npx wrangler d1 migrations apply DB --env staging --remote",
+    "migrate:prod": "npx wrangler d1 migrations apply DB --remote",
+    "logs:staging": "npx wrangler tail --env staging"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.75",
