@@ -87,9 +87,10 @@ export default defineNuxtConfig({
     },
     // Crucial: Use 'unenv' to kill Node polyfills that cause build hangs
     alias: {
-      'node:crypto': 'unenv/runtime/mock/empty',
-      'node:stream/web': 'unenv/runtime/mock/empty',
-      'node:events': 'unenv/runtime/mock/empty',
+      'node:crypto': 'unenv/runtime/node/crypto/index',
+      'node:stream/web': 'unenv/runtime/node/stream/web/index',
+      'node:events': 'unenv/runtime/node/events/index',
+      'node:stream': 'unenv/runtime/node/stream/index'
     },
   },
 
