@@ -2,14 +2,34 @@
 name = "nuxt-auto-crud-template"
 compatibility_date = "2026-01-21"
 main = ".output/server/index.mjs"
-
 compatibility_flags = ["nodejs_compat"]
+
+# --- Production Bindings (Default) ---
 [[d1_databases]]
 binding = "DB"
 database_name = "nac-template-db"
 database_id = "caee4ecf-0847-4c6d-bb12-5947dd6981c8"
 migrations_dir = "server/db/migrations/sqlite"
 
+[[kv_namespaces]]
+binding = "KV"
+id = "12850c35c07a4574ad0a51ba6e6832ec"
+
+# --- Staging Environment ---
+[env.staging]
+name = "nuxt-auto-crud-template-staging"
+
+[[env.staging.d1_databases]]
+binding = "DB"
+database_name = "nac-template-db-staging"
+database_id = "1688796e-64f6-4407-8e2b-8ffccd893440"
+migrations_dir = "server/db/migrations/sqlite"
+
+[[env.staging.kv_namespaces]]
+binding = "KV"
+id = "37560ed6b08a400392edff1120e299dd"
+
+# --- Shared Config ---
 [observability]
 enabled = true
 head_sampling_rate = 1
