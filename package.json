@@ -11,6 +11,9 @@
     "test": "vitest",
     "db:generate": "nuxt db generate",
     "start": "node .output/server/index.mjs",
+    "build:staging": "NITRO_PRESET=cloudflare-module NODE_OPTIONS='--max-old-space-size=4096' npx nuxi build",
+    "deploy:staging": "npm run build:staging && npx wrangler deploy --env staging",
+    "deploy:prod": "bunx wrangler deploy",
     "migrate:staging": "npx wrangler d1 migrations apply DB --env staging --remote",
     "migrate:prod": "npx wrangler d1 migrations apply DB --remote",
     "logs:staging": "npx wrangler tail --env staging"
