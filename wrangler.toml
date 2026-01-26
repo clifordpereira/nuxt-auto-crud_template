@@ -1,12 +1,26 @@
 # wrangler.toml
 name = "nuxt-auto-crud-template"
-route = { pattern = "auto-crud.clifland.in", custom_domain = true }
-
-compatibility_date = "2026-01-21"
 main = ".output/server/index.mjs"
+compatibility_date = "2026-01-21"
 compatibility_flags = ["nodejs_compat"]
 
-# --- Production Bindings (Default) ---
+# --- Assets & Observability (Global) ---
+[assets]
+directory = ".output/public"
+binding = "ASSETS"
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+# --- Production Config (Default / Concrete Class) ---
+[[routes]]
+pattern = "auto-crud.clifland.in"
+custom_domain = true
+
+[vars]
+NUXT_PUBLIC_ENV = "production"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "nac-template-db"
@@ -17,13 +31,16 @@ migrations_dir = "server/db/migrations/sqlite"
 binding = "KV"
 id = "12850c35c07a4574ad0a51ba6e6832ec"
 
-[vars]
-NUXT_PUBLIC_ENV = "production"
-
-# --- Staging Environment ---
+# --- Staging Environment (Instance Override) ---
 [env.staging]
 name = "nuxt-auto-crud-template-staging"
-route = { pattern = "staging.auto-crud.clifland.in", custom_domain = true }
+
+[[env.staging.routes]]
+pattern = "staging.auto-crud.clifland.in"
+custom_domain = true
+
+[env.staging.vars]
+NUXT_PUBLIC_ENV = "staging"
 
 [[env.staging.d1_databases]]
 binding = "DB"
@@ -34,14 +51,3 @@ migrations_dir = "server/db/migrations/sqlite"
 [[env.staging.kv_namespaces]]
 binding = "KV"
 id = "37560ed6b08a400392edff1120e299dd"
-
-vars = { NUXT_PUBLIC_ENV = "staging" }
-
-# --- Shared Config ---
-[observability]
-enabled = true
-head_sampling_rate = 1
-
-[assets]
-directory = ".output/public"
-binding = "ASSETS"

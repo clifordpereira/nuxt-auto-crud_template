@@ -13,12 +13,15 @@
     "db:generate": "nuxi db generate",
     "db:migrate": "nuxi db migrate",
     "db:studio": "nuxi db studio",
+    "// --- Build ---": "",
     "build": "NODE_OPTIONS='--max-old-space-size=4096' nuxi build",
     "// --- Prod ---": "",
     "migrate:prod": "nuxi db migrate --remote",
+    "deploy:prod": "bun run build && bun run migrate:prod && wrangler deploy",
     "logs:prod": "wrangler tail",
     "// --- Staging ---": "",
     "migrate:staging": "nuxi db migrate --remote --env staging",
+    "deploy:staging": "bun run build && bun run migrate:staging && wrangler deploy --env staging",
     "logs:staging": "wrangler tail --env staging"
   },
   "dependencies": {
