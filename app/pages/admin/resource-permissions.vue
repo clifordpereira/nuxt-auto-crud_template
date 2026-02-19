@@ -29,24 +29,23 @@ definePageMeta({
   middleware: 'auth',
 })
 
-const config = useRuntimeConfig().public
-const crudBaseUrl = config.crudBaseUrl || '/api'
+const { endpointPrefix } = useRuntimeConfig().public.autoCrud
 const toast = useToast()
 
 // Fetch all necessary data
-const { data: roles } = await useFetch<Role[]>(`${crudBaseUrl}/roles`, {
+const { data: roles } = await useFetch<Role[]>(`${endpointPrefix}/roles`, {
   headers: crudHeaders(),
 })
 
-const { data: resources } = await useFetch<Resource[]>(`${crudBaseUrl}/resources`, {
+const { data: resources } = await useFetch<Resource[]>(`${endpointPrefix}/resources`, {
   headers: crudHeaders(),
 })
 
-const { data: permissions } = await useFetch<Permission[]>(`${crudBaseUrl}/permissions`, {
+const { data: permissions } = await useFetch<Permission[]>(`${endpointPrefix}/permissions`, {
   headers: crudHeaders(),
 })
 
-const { data: roleResourcePermissions, refresh } = await useFetch<RoleResourcePermission[]>(`${crudBaseUrl}/roleResourcePermissions`, {
+const { data: roleResourcePermissions, refresh } = await useFetch<RoleResourcePermission[]>(`${endpointPrefix}/roleResourcePermissions`, {
   headers: crudHeaders(),
 })
 
@@ -139,7 +138,7 @@ const saveChanges = async () => {
 
     // Batch create
     for (const item of toCreate) {
-      promises.push($fetch(`${crudBaseUrl}/roleResourcePermissions`, {
+      promises.push($fetch(`${endpointPrefix}/roleResourcePermissions`, {
         method: 'POST',
         headers: crudHeaders(),
         body: item,
@@ -148,7 +147,7 @@ const saveChanges = async () => {
 
     // Batch delete
     for (const id of toDelete) {
-      promises.push($fetch(`${crudBaseUrl}/roleResourcePermissions/${id}`, {
+      promises.push($fetch(`${endpointPrefix}/roleResourcePermissions/${id}`, {
         method: 'DELETE',
         headers: crudHeaders(),
         body: undefined, // Explicitly undefined for DELETE generally, though not strictly needed
@@ -176,11 +175,11 @@ const displayResources = computed(() => resources.value?.filter(r =>
 ) || [])
 
 const crudGroups = [
-  { label: 'List', any: 'list', anyLabel: 'Any', own: 'list_own', ownLabel: 'Own', all: 'list_all' },
-  { label: 'Read', any: 'read', anyLabel: 'Others', own: 'read_own', ownLabel: 'Own' },
+  { label: 'List', any: 'list', anyLabel: 'All', own: 'list_own', ownLabel: 'Own', all: 'list_all' },
+  { label: 'Read', any: 'read', anyLabel: 'Any', own: 'read_own', ownLabel: 'Own' },
   { label: 'Create', any: 'create', anyLabel: 'Own' },
-  { label: 'Update', any: 'update', anyLabel: 'Others', own: 'update_own', ownLabel: 'Own', status: 'update_status' },
-  { label: 'Delete', any: 'delete', anyLabel: 'Others', own: 'delete_own', ownLabel: 'Own' },
+  { label: 'Update', any: 'update', anyLabel: 'Any', own: 'update_own', ownLabel: 'Own', status: 'update_status' },
+  { label: 'Delete', any: 'delete', anyLabel: 'Any', own: 'delete_own', ownLabel: 'Own' },
 ]
 
 const getPermissionId = (code: string) => {

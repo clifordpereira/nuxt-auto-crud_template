@@ -1,26 +1,23 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { useChangeCase } from '@vueuse/integrations/useChangeCase'
-import resourceAbility from '~~/shared/utils/abilities'
+import { dbFieldToLabel } from '~/utils/formatter'
+import type { SchemaDefinition } from '#nac/shared/utils/types'
+
+const { user } = useUserSession()
 
 const props = defineProps<{
   resource: string
-  schema: {
-    resource: string
-    fields: { name: string, type: string, required?: boolean }[]
-  }
 }>()
 
-const config = useRuntimeConfig().public
-const crudBaseUrl = config.crudBaseUrl || '/api'
+const { endpointPrefix } = useRuntimeConfig().public.autoCrud
 
-const { data } = await useFetch(`${crudBaseUrl}/${props.resource}`, {
+const { data } = await useFetch(`${endpointPrefix}/${props.resource}`, {
   headers: crudHeaders(),
 })
 
-// Fetch relations
-const { fetchRelations, getDisplayValue, forbiddenRelations } = useRelationDisplay(props.schema)
-await fetchRelations()
+const { data: schema } = await useFetch<SchemaDefinition>(`${endpointPrefix}/_schemas/${props.resource}`, {
+  headers: crudHeaders(),
+})
 
 async function onDelete(id: number) {
   if (!confirm('Are you sure you want to delete this row?')) return
@@ -33,13 +30,12 @@ const appConfig = useAppConfig()
 const crudConfig = appConfig.crud
 
 // Agent Hint: Field visibility is controlled by app.config.ts (crud.globalHide)
-// and relationship constraints in useRelationDisplay.
 const visibleColumns = computed(() => {
   if (!data.value?.length) return []
   const hideList = crudConfig?.globalHide || ['updatedAt', 'deletedAt', 'createdBy', 'updatedBy']
+
   return Object.keys(data.value[0]).filter(key =>
-    !forbiddenRelations.value.has(String(key))
-    && !hideList.includes(String(key)),
+    !hideList.includes(String(key)),
   )
 })
 
@@ -52,15 +48,22 @@ const getExportExclusions = (type: 'pdf' | 'excel') => {
 }
 
 const getExportData = (exclude: string[] = []) => {
-  if (!data.value) return []
-  const items = (Array.isArray(data.value) ? data.value : []) as Record<string, unknown>[]
-  return items.map((row: Record<string, unknown>) => {
+  const items = (data.value ?? []) as Record<string, unknown>[]
+  if (!items.length) return []
+
+  // Pre-calculate Column Mapping once
+  const columnMap = visibleColumns.value
+    .filter(col => !exclude.includes(String(col)))
+    .map(col => ({
+      key: String(col),
+      label: dbFieldToLabel(String(col)),
+    }))
+
+  return items.map((row) => {
     const exportRow: Record<string, unknown> = {}
-    visibleColumns.value.forEach((col) => {
-      if (exclude.includes(String(col))) return
-      const label = useChangeCase(String(col).replace(/(_id|Id)$/, ''), 'capitalCase').value
-      exportRow[label] = getDisplayValue(col, row[col])
-    })
+    for (const { key, label } of columnMap) {
+      exportRow[label] = row[key]
+    }
     return exportRow
   })
 }
@@ -95,7 +98,10 @@ const store = {
     }
   },
   addRow: (rowData: Record<string, unknown>) => {
-    data.value = [rowData, ...(data.value || [])]
+    if (!data.value) data.value = []
+    const exists = data.value.some((r: Record<string, unknown>) => r.id === rowData.id)
+    if (exists) return
+    data.value = [rowData, ...data.value]
   },
   removeRow: (id: string | number) => {
     if (!data.value) return
@@ -104,7 +110,7 @@ const store = {
   },
 }
 
-useAutoCrudSSE(({ table, action, data: sseData, primaryKey }) => {
+useNacAutoCrudSSE(({ table, action, data: sseData, primaryKey }) => {
   if (table !== currentTable.value) return
 
   if (action === 'update') {
@@ -155,15 +161,11 @@ useAutoCrudSSE(({ table, action, data: sseData, primaryKey }) => {
             variant="outline"
           />
         </UDropdownMenu>
-        <Can
-          :ability="resourceAbility"
-          :args="[resource, 'create']"
-        >
-          <CrudCreateRow
-            :resource="resource"
-            :schema="schema"
-          />
-        </Can>
+        <CrudCreateRow
+          v-if="schema && hasPermission(user, resource, 'create')"
+          :resource="resource"
+          :schema="schema"
+        />
       </div>
     </div>
 
@@ -183,7 +185,7 @@ useAutoCrudSSE(({ table, action, data: sseData, primaryKey }) => {
                 scope="col"
                 class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white"
               >
-                {{ useChangeCase(String(col).replace(/(_id|Id)$/, ''), 'capitalCase').value }}
+                {{ dbFieldToLabel(String(col)) }}
               </th>
             </template>
             <th
@@ -207,8 +209,8 @@ useAutoCrudSSE(({ table, action, data: sseData, primaryKey }) => {
 
         <tbody class="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
           <tr
-            v-for="(row, i) in paginatedItems"
-            :key="i"
+            v-for="row in paginatedItems"
+            :key="String(row.id)"
             class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
           >
             <template
@@ -218,7 +220,7 @@ useAutoCrudSSE(({ table, action, data: sseData, primaryKey }) => {
               <td
                 class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ getDisplayValue(String(col), row[col]) }}
+                {{ row[col] }}
               </td>
             </template>
 
@@ -235,39 +237,27 @@ useAutoCrudSSE(({ table, action, data: sseData, primaryKey }) => {
 
                 <template #content>
                   <div class="p-1 flex flex-col gap-1 min-w-[120px]">
-                    <Can
-                      :ability="resourceAbility"
-                      :args="[resource, 'read']"
-                    >
-                      <CrudViewRow
-                        :row="row"
-                        :schema="schema"
-                      />
-                    </Can>
-                    <Can
-                      :ability="resourceAbility"
-                      :args="[resource, 'update', row]"
-                    >
-                      <CrudEditRow
-                        :resource="resource"
-                        :row="row"
-                        :schema="schema"
-                      />
-                    </Can>
-                    <Can
-                      :ability="resourceAbility"
-                      :args="[resource, 'delete', row]"
-                    >
-                      <UButton
-                        label="Delete"
-                        color="error"
-                        variant="ghost"
-                        size="xs"
-                        icon="i-lucide-trash"
-                        class="justify-start"
-                        @click="onDelete(row.id as number)"
-                      />
-                    </Can>
+                    <CrudViewRow
+                      v-if="schema && hasRowPermission(user, resource, 'read', row)"
+                      :row="row"
+                      :schema="schema"
+                    />
+                    <CrudEditRow
+                      v-if="schema && hasRowPermission(user, resource, 'update', row)"
+                      :resource="resource"
+                      :row="row"
+                      :schema="schema"
+                    />
+                    <UButton
+                      v-if="hasRowPermission(user, resource, 'delete', row)"
+                      label="Delete"
+                      color="error"
+                      variant="ghost"
+                      size="xs"
+                      icon="i-lucide-trash"
+                      class="justify-start"
+                      @click="onDelete(row.id as number)"
+                    />
                   </div>
                 </template>
               </UPopover>

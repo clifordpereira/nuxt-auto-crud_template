@@ -1,21 +1,14 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { useChangeCase } from '@vueuse/integrations/useChangeCase'
 
+import type { SchemaDefinition } from '#nac/shared/utils/types'
+
 const props = defineProps<{
-  schema: {
-    resource: string
-    fields: {
-      name: string
-      type: string
-      required?: boolean
-      selectOptions?: string[]
-      references?: string
-    }[]
-  }
+  schema: SchemaDefinition
   initialState?: Record<string, unknown>
+  loading?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -26,8 +19,8 @@ const emit = defineEmits<{
 // filter out system fields
 const filteredFields = props.schema.fields.filter(
   (field) => {
-    const isSystem = ['id', 'created_at', 'updated_at', 'deleted_at', 'createdAt', 'updatedAt', 'deletedAt', 'created_by', 'updated_by', 'createdBy', 'updatedBy'].includes(field.name)
-    if (isSystem) return false
+    const { formHiddenFields } = useRuntimeConfig().public.autoCrud
+    if (formHiddenFields.includes(field.name)) return false
     // Hide status during creation
     if (field.name === 'status' && !props.initialState) return false
     return true
@@ -36,10 +29,7 @@ const filteredFields = props.schema.fields.filter(
 
 const { user } = useUserSession()
 
-const canUpdateStatus = computed(() => {
-  const userPerms = (user.value as any)?.permissions?.[props.schema.resource] as string[] | undefined
-  return user.value?.role === 'admin' || (Array.isArray(userPerms) && userPerms.includes('update_status'))
-})
+const canUpdateStatus = computed(() => hasPermission(user.value, props.schema.resource, 'update_status'))
 
 // dynamically build zod schema
 const formSchema = useDynamicZodSchema(filteredFields, !!props.initialState)
@@ -172,7 +162,10 @@ function handleSubmit(event: FormSubmitEvent<Record<string, unknown>>) {
         </UFormField>
       </template>
 
-      <UButton type="submit">
+      <UButton
+        type="submit"
+        :loading="loading"
+      >
         Submit
       </UButton>
     </UForm>

@@ -5,8 +5,7 @@ export async function useCrudFetch(
   id: number | null = null,
   data: Record<string, unknown> | null = null,
 ) {
-  const config = useRuntimeConfig().public
-  const crudBaseUrl = config.crudBaseUrl || '/api'
+  const { endpointPrefix } = useRuntimeConfig().public.autoCrud
 
   const toastMessage: Record<
     'POST' | 'PATCH' | 'DELETE',
@@ -32,10 +31,8 @@ export async function useCrudFetch(
   try {
     const url
       = method === 'PATCH' || method === 'DELETE'
-        ? `${crudBaseUrl}/${resource}/${id}`
-        : `${crudBaseUrl}/${resource}`.replace('//', '/')
-
-    console.log(url)
+        ? `${endpointPrefix}/${resource}/${id}`
+        : `${endpointPrefix}/${resource}`.replace('//', '/')
 
     await $fetch(url, {
       method,
@@ -51,8 +48,7 @@ export async function useCrudFetch(
 
     await refreshNuxtData()
   }
-  catch (err) {
-    console.log('Server Error: ', err)
+  catch {
     useToast().add({
       title: 'Error',
       description: toastMessage[method].errorMessage,

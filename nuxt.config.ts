@@ -3,18 +3,18 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
+    '@nuxt/content',
+    '@nuxt/image',
+    '@nuxt/fonts',
+    '@nuxt/scripts',
     '@nuxt/eslint',
+    '@nuxt/test-utils/module',
     '@nuxthub/core',
-    'nuxt-auth-utils',
     '@vueuse/nuxt',
-    'nuxt-authorization',
+    'nuxt-auth-utils',
     'nuxt-security',
     'nuxt-delay-hydration',
     'nuxt-auto-crud',
-    '@nuxt/content',
-    '@nuxt/image',
-    '@nuxt/scripts',
-    '@nuxt/fonts',
   ],
 
   devtools: { enabled: true },
@@ -23,6 +23,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     // Private keys (Server-side only)
+    agenticToken: '',
     sessionPassword: '',
     adminEmail: 'admin@example.com',
     adminPassword: '$1Password', // Overridden by NUXT_ADMIN_PASSWORD
@@ -43,7 +44,6 @@ export default defineNuxtConfig({
 
     // Public keys (Available on Server and Client)
     public: {
-      crudBaseUrl: '/api',
       scripts: {
         googleTagManager: {
           id: '', // Overridden by NUXT_PUBLIC_SCRIPTS_GOOGLE_TAG_MANAGER_ID
@@ -58,7 +58,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { isr: 3600 },
     '/docs/**': { isr: 86400 },
-    '/api/sse': {
+    '/api/_nac/_sse': {
       cache: false,
       headers: {
         'Content-Type': 'text/event-stream',
@@ -89,26 +89,26 @@ export default defineNuxtConfig({
       'node:crypto': 'crypto',
       'node:stream/web': 'stream/web',
       'node:events': 'events',
-      'node:stream': 'stream'
-    }
+      'node:stream': 'stream',
+    },
   },
 
   hub: {
-    db: 'sqlite',
-    kv: true,
+    db: { dialect: 'sqlite', casing: 'snake_case' },
   },
 
   autoCrud: {
+    endpointPrefix: '/api/_nac',
     schemaPath: 'server/db/schema',
     auth: {
-      type: 'session',
       authentication: true,
       authorization: true,
+      ownerKey: 'createdBy',
     },
     // Fields exposed to guest users.
     // Ensure the `list` permission for the `public` role is enabled for these resources in the Admin Dashboard.
-    resources: {
-      testimonials: ['name', 'content', 'avatar', 'company', 'createdAt'],
+    publicResources: {
+      testimonials: ['id', 'name', 'content', 'avatar', 'company', 'createdAt'],
     },
   },
   delayHydration: {

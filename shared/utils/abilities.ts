@@ -1,81 +1,31 @@
-import { defineAbility } from 'nuxt-authorization/utils'
+import type { User } from '#auth-utils'
 
-let publicPermissionsCache: Record<string, string[]> | null = null
-let lastFetchTime = 0
-const TTL = 60000 // 60 seconds cache for abilities logic fallback
-
-interface User {
-  id?: string | number
-  role?: string
-  permissions?: Record<string, string[]>
+export function isAdmin(user: User | null | undefined) {
+  if (!user) return false
+  return user?.role === 'admin'
 }
 
-// Update signature to accept context
-export const abilityLogic = async (user: unknown, model: string, action: string, context?: Record<string, unknown> & { id?: string | number, createdBy?: string | number, userId?: string | number }) => {
-  const userRecord = user as User
+export function isOwner(user: User | null | undefined, record?: Record<string, unknown>, ownerKey: string = 'createdBy'): boolean {
+  if (!user?.id || !record) return false
+  return Number(user.id) === Number(record[ownerKey])
+}
 
-  // 1. Admin has full access
-  if (userRecord?.role === 'admin') {
-    return true
-  }
+export function hasPermission(user: User | null | undefined, model: string, action: string) {
+  if (isAdmin(user)) return true
+  if (!user) return false
+  return !!user?.permissions?.[model]?.includes(action)
+}
 
-  // 2. Check permissions from session (DB-driven) for logged-in users
-  if (user) {
-    const resourcePermissions = userRecord?.permissions?.[model]
+export function hasRowPermission(user: User | null | undefined, model: string, action: string, record?: Record<string, unknown>) {
+  if (hasPermission(user, model, action)) return true
 
-    if (Array.isArray(resourcePermissions)) {
-      if (resourcePermissions.includes(action)) {
-        return true
-      }
-
-      // Check ownership permissions
-      const ownAction = `${action}_own`
-      if (resourcePermissions.includes(ownAction)) {
-        if (context) {
-          // Case A: Users table - User updates themselves
-          if (model === 'users') {
-            if (String(context.id) === String(userRecord.id)) {
-              return true
-            }
-          }
-
-          // Case B: Created By check
-          if (context.createdBy && String(context.createdBy) === String(userRecord.id)) {
-            return true
-          }
-
-          // Case C: Legacy userId check
-          if (context.userId && String(context.userId) === String(userRecord.id)) {
-            return true
-          }
-        }
-      }
-    }
-  }
-
-  // 3. Fallback: Check Public/Unauthenticated Access
-  // (Allows logged-in users to perform public actions if they don't have explicit overrides)
-  const now = Date.now()
-  if (!publicPermissionsCache || (now - lastFetchTime > TTL)) {
-    try {
-      // Use $fetch which handles both client and server (Nitro internal fetch)
-      publicPermissionsCache = await $fetch<Record<string, string[]>>('/api/public-permissions')
-      lastFetchTime = now
-    }
-    catch (e) {
-      console.error('Failed to fetch public permissions', e)
-      // Don't overwrite cache if it exists, so we have stale-while-revalidate behavior
-      publicPermissionsCache = publicPermissionsCache || {}
-    }
-  }
-  const publicPermissions = publicPermissionsCache || {}
-  const resourcePublicPermissions = publicPermissions[model]
-
-  if (Array.isArray(resourcePublicPermissions)) {
-    return resourcePublicPermissions.includes(action)
+  if (hasPermission(user, model, `${action}_own`)) {
+    return isOwner(user, record)
   }
 
   return false
 }
 
-export default defineAbility(abilityLogic)
+export function isAllowedToSeeResourceMenu(user: User | null | undefined, model: string) {
+  return hasPermission(user, model, 'list') || hasPermission(user, model, 'list_all') || hasPermission(user, model, 'list_own')
+}

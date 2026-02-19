@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import { useChangeCase } from '@vueuse/integrations/useChangeCase'
+import type { SchemaDefinition } from '#nac/shared/utils/types'
 
 const props = defineProps<{
   resource: string
-  schema: {
-    resource: string
-    fields: { name: string, type: string, required?: boolean }[]
-  }
+  schema: SchemaDefinition
 }>()
 
 const open = ref(false)
+const loading = ref(false)
 
 async function onSubmit(data: Record<string, unknown>) {
-  await useCrudFetch('POST', props.resource, null, data)
-  open.value = false
+  loading.value = true
+  try {
+    await useCrudFetch('POST', props.resource, null, data)
+    open.value = false
+  }
+  finally {
+    loading.value = false
+  }
 }
 </script>
 
@@ -38,6 +43,7 @@ async function onSubmit(data: Record<string, unknown>) {
           <div v-if="schema">
             <CrudForm
               :schema="schema"
+              :loading="loading"
               @submit="onSubmit"
             />
           </div>

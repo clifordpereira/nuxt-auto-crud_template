@@ -6,16 +6,18 @@ const props = defineProps<{
   collapsed?: boolean
 }>()
 
-const { schemas } = await useResourceSchemas()
-const { hasPermission } = usePermissions()
+const { user } = useUserSession()
+
+const { endpointPrefix } = useRuntimeConfig().public.autoCrud
+const systemTables = ['users', 'roles', 'permissions', 'resources', 'roleResourcePermissions', 'testimonials', 'subscribers']
+const { data: schemas } = await useFetch<string[]>(`${endpointPrefix}/_schemas`)
+
+const filteredResources = useArrayDifference(() => schemas.value || [], systemTables)
 
 const resourceNames = computed(() =>
-  Object.keys(schemas.value || {}).filter((name) => {
-    // Exclude system tables
-    if (['users', 'roles', 'permissions', 'resources', 'roleResourcePermissions', 'testimonials', 'subscribers'].includes(name)) return false
-
-    return hasPermission(name, 'list') || hasPermission(name, 'list_own')
-  }).sort((a, b) => b.localeCompare(a)),
+  filteredResources.value
+    .filter(name => isAllowedToSeeResourceMenu(user.value, name))
+    .sort((a, b) => a.localeCompare(b)),
 )
 
 const items = computed(() => {

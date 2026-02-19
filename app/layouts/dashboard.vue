@@ -8,24 +8,22 @@ const collapsed = ref(false)
 
 // Map menus to add onSelect handler
 const { user } = useUserSession()
-const { hasPermission } = usePermissions()
 
 const mainLinks = computed(() => {
   const links = mainMenu.map((item) => {
     const link = {
       ...item,
-      onSelect: () => {
-        open.value = false
-      },
+      onSelect: () => { open.value = false },
     }
 
+    // Template Models
     if (link.children) {
       link.children = link.children.filter((child) => {
         if (child.label === 'Testimonials') {
-          return hasPermission('testimonials', 'list')
+          return isAllowedToSeeResourceMenu(user.value, 'testimonials')
         }
         if (child.label === 'Subscribers') {
-          return hasPermission('subscribers', 'list')
+          return isAllowedToSeeResourceMenu(user.value, 'subscribers')
         }
         return true
       })
@@ -36,10 +34,10 @@ const mainLinks = computed(() => {
 
   return links.filter((link) => {
     if (link.label === 'Users') {
-      return hasPermission('users', 'list')
+      return hasPermission(user.value, 'users', 'list')
     }
     if (link.label === 'Roles & Permissions') {
-      return (user.value as { role?: string })?.role === 'admin'
+      return isAdmin(user.value) // Only Admin can manage Roles & Permissions
     }
     if (link.label === 'Template Models') {
       return link.children && link.children.length > 0
@@ -50,9 +48,7 @@ const mainLinks = computed(() => {
 
 const footerLinks = computed(() => footerMenu.map(item => ({
   ...item,
-  onSelect: () => {
-    open.value = false
-  },
+  onSelect: () => { open.value = false },
 })))
 </script>
 

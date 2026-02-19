@@ -1,5 +1,4 @@
 import { sqliteTable, text, index, integer } from 'drizzle-orm/sqlite-core'
-import { relations } from 'drizzle-orm'
 import { systemFields, baseFields } from './utils'
 import { users } from './users'
 
@@ -11,6 +10,16 @@ export const categories = sqliteTable('categories', {
   type: text('type', { enum: ['post', 'product', 'service'] }).notNull().default('post'),
 })
 
+/**
+ * Polymorphic Comments/Reviews
+ *
+ * This table is designed to be generic. It can be used for:
+ * - Comments on posts
+ * - Reviews on products
+ * - Feedback on services
+ *
+ * The `resourceType` and `resourceId` columns link the comment to the specific resource.
+ */
 export const comments = sqliteTable('comments', {
   ...systemFields,
   content: text('content').notNull(),
@@ -27,12 +36,4 @@ export const comments = sqliteTable('comments', {
   isApproved: integer('is_approved', { mode: 'boolean' }).default(false),
 }, t => ({
   resourceIdx: index('resource_idx').on(t.resourceType, t.resourceId),
-}))
-
-export const commentsRelations = relations(comments, ({ one }) => ({
-  author: one(users, {
-    fields: [comments.authorId],
-    references: [users.id],
-    relationName: 'comment_author',
-  }),
 }))
