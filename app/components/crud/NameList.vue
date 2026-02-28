@@ -18,9 +18,9 @@ else if (props.fieldName) {
   urlPath = pluralize(baseName) // e.g., user_id → users
 }
 
-const { endpointPrefix } = useRuntimeConfig().public.autoCrud
+const { nacEndpointPrefix } = useRuntimeConfig().public.autoCrud
 
-const { data: options } = await useFetch(() => `${endpointPrefix}/${urlPath}`, {
+const { data: options } = await useFetch(() => `${nacEndpointPrefix}/${urlPath}`, {
   key: `crud-${urlPath}`,
   transform: (rows: Record<string, unknown>[]) =>
     rows?.map((row) => {

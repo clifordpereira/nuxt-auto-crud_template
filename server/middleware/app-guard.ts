@@ -60,8 +60,8 @@ function isPathToGuard(pathname: string) {
 }
 
 function isNacPath(pathname: string) {
-  const { endpointPrefix = '/api/_nac' } = useRuntimeConfig().public.autoCrud
-  return pathname.startsWith(endpointPrefix)
+  const { nacEndpointPrefix = '/api/_nac' } = useRuntimeConfig().public.autoCrud
+  return pathname.startsWith(nacEndpointPrefix)
 }
 
 function isAgenticPath(pathname: string) {
@@ -70,13 +70,13 @@ function isAgenticPath(pathname: string) {
 }
 
 function isNacSystemPath(pathname: string) {
-  const { endpointPrefix = '/api/_nac' } = useRuntimeConfig().public.autoCrud
-  return pathname.startsWith(endpointPrefix + '/_')
+  const { nacEndpointPrefix = '/api/_nac' } = useRuntimeConfig().public.autoCrud
+  return pathname.startsWith(nacEndpointPrefix + '/_')
 }
 
 function extractModelAndIdFromPath(pathname: string) {
-  const { endpointPrefix = '/api/_nac' } = useRuntimeConfig().public.autoCrud
-  const relativePath = pathname.slice(endpointPrefix.length).replace(/^\//, '')
+  const { nacEndpointPrefix = '/api/_nac' } = useRuntimeConfig().public.autoCrud
+  const relativePath = pathname.slice(nacEndpointPrefix.length).replace(/^\//, '')
   const [model, id] = relativePath.split('/')
   return { model: model || '', id }
 }

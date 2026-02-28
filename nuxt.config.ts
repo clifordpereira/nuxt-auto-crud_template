@@ -98,7 +98,7 @@ export default defineNuxtConfig({
   },
 
   autoCrud: {
-    endpointPrefix: '/api/_nac',
+    nacEndpointPrefix: '/api/_nac',
     schemaPath: 'server/db/schema',
     auth: {
       authentication: true,

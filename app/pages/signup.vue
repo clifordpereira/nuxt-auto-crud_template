@@ -18,8 +18,8 @@ const { handleAuthQueryError, handleSubmitError } = useAuthErrorHandling()
 
 handleAuthQueryError()
 
-const { endpointPrefix } = useRuntimeConfig().public.autoCrud
-const { data: roles } = await useFetch<any[]>(`${endpointPrefix}/roles`)
+const { nacEndpointPrefix } = useRuntimeConfig().public.autoCrud
+const { data: roles } = await useFetch<any[]>(`${nacEndpointPrefix}/roles`)
 const selectableRoles = computed(() => {
   return roles.value
     ?.filter((r: any) => !['public', 'user', 'manager', 'admin'].includes(r.name))

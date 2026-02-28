@@ -17,7 +17,7 @@
         "drizzle-orm": "^1.0.0-beta.9-e89174b",
         "nuxt": "^4.3.1",
         "nuxt-auth-utils": "^0.5.29",
-        "nuxt-auto-crud": "^2.1.0",
+        "nuxt-auto-crud": "^2.1.4",
         "nuxt-delay-hydration": "^1.3.8",
         "nuxt-security": "^2.5.1",
         "uuidv7": "^1.1.0",
@@ -2139,7 +2139,7 @@
 
     "nuxt-auth-utils": ["nuxt-auth-utils@0.5.29", "", { "dependencies": { "@adonisjs/hash": "^9.1.1", "@nuxt/kit": "^4.3.1", "defu": "^6.1.4", "h3": "^1.15.4", "hookable": "^6.0.1", "jose": "^6.1.3", "ofetch": "^1.5.1", "openid-client": "^6.8.2", "pathe": "^2.0.3", "scule": "^1.3.0", "uncrypto": "^0.1.3" }, "peerDependencies": { "@atproto/api": "^0.13.15", "@atproto/oauth-client-node": "^0.2.0", "@simplewebauthn/browser": "^11.0.0", "@simplewebauthn/server": "^11.0.0" }, "optionalPeers": ["@atproto/api", "@atproto/oauth-client-node", "@simplewebauthn/browser", "@simplewebauthn/server"] }, "sha512-aQ9oD8QR51jUCe2BFEsO/G/E0K+XUy8Skjn3hYcNLiqZ9XE4Y3uT/ozBCmAQ+TR3WW6prj8vUR0wQes8W1N0PA=="],
 
-    "nuxt-auto-crud": ["nuxt-auto-crud@2.1.0", "", { "dependencies": { "@nuxt/kit": "^4.3.1", "drizzle-zod": "^0.8.3", "pluralize": "^8.0.0", "zod": "^4.3.6" }, "peerDependencies": { "@libsql/client": "^0.17.0", "@nuxthub/core": "^0.10.6", "drizzle-kit": ">=1.0.0-beta.15 <2", "drizzle-orm": ">=1.0.0-beta.15 <2", "nuxt": "^4.3.0" } }, "sha512-+Tvp/0VQ//+4aTYVASOR9igKPhIvzaTmcolN4yWELdL3TIFkx46+BLnaIWEwE8mM7jCIq7tETj4AOlzNL7E3Ow=="],
+    "nuxt-auto-crud": ["nuxt-auto-crud@2.1.4", "", { "dependencies": { "@nuxt/kit": "^4.3.1", "drizzle-zod": "^0.8.3", "pluralize": "^8.0.0", "zod": "^4.3.6" }, "peerDependencies": { "@libsql/client": "^0.17.0", "@nuxthub/core": "^0.10.6", "drizzle-kit": ">=1.0.0-beta.0", "drizzle-orm": ">=1.0.0-beta.0", "nuxt": "^4.3.0" } }, "sha512-jetXgn7nSS3L0jGnvVuuoPnbaL1jCfY0XiRSEhoGAP0nEXdcBnFByE3/HwA65/ZFKwFqw7wdxNyp2BJf71fTow=="],
 
     "nuxt-component-meta": ["nuxt-component-meta@0.17.1", "", { "dependencies": { "@nuxt/kit": "^4.2.2", "citty": "^0.1.6", "mlly": "^1.8.0", "ohash": "^2.0.11", "scule": "^1.3.0", "typescript": "^5.9.3", "ufo": "^1.6.2", "vue-component-meta": "^3.2.2" }, "bin": { "nuxt-component-meta": "bin/nuxt-component-meta.mjs" } }, "sha512-5pVCzWXqg9HP159JDhdfQJtFvgmS/KouEVpyYLPEBXWMrQoJBwujsczmLeIKXKI2BTy4RqfXy8N1GfGTZNb57g=="],
 

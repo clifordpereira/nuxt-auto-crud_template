@@ -5,7 +5,7 @@ export async function useCrudFetch(
   id: number | null = null,
   data: Record<string, unknown> | null = null,
 ) {
-  const { endpointPrefix } = useRuntimeConfig().public.autoCrud
+  const { nacEndpointPrefix } = useRuntimeConfig().public.autoCrud
 
   const toastMessage: Record<
     'POST' | 'PATCH' | 'DELETE',
@@ -31,8 +31,8 @@ export async function useCrudFetch(
   try {
     const url
       = method === 'PATCH' || method === 'DELETE'
-        ? `${endpointPrefix}/${resource}/${id}`
-        : `${endpointPrefix}/${resource}`.replace('//', '/')
+        ? `${nacEndpointPrefix}/${resource}/${id}`
+        : `${nacEndpointPrefix}/${resource}`.replace('//', '/')
 
     await $fetch(url, {
       method,

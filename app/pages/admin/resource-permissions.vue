@@ -29,23 +29,23 @@ definePageMeta({
   middleware: 'auth',
 })
 
-const { endpointPrefix } = useRuntimeConfig().public.autoCrud
+const { nacEndpointPrefix } = useRuntimeConfig().public.autoCrud
 const toast = useToast()
 
 // Fetch all necessary data
-const { data: roles } = await useFetch<Role[]>(`${endpointPrefix}/roles`, {
+const { data: roles } = await useFetch<Role[]>(`${nacEndpointPrefix}/roles`, {
   headers: crudHeaders(),
 })
 
-const { data: resources } = await useFetch<Resource[]>(`${endpointPrefix}/resources`, {
+const { data: resources } = await useFetch<Resource[]>(`${nacEndpointPrefix}/resources`, {
   headers: crudHeaders(),
 })
 
-const { data: permissions } = await useFetch<Permission[]>(`${endpointPrefix}/permissions`, {
+const { data: permissions } = await useFetch<Permission[]>(`${nacEndpointPrefix}/permissions`, {
   headers: crudHeaders(),
 })
 
-const { data: roleResourcePermissions, refresh } = await useFetch<RoleResourcePermission[]>(`${endpointPrefix}/roleResourcePermissions`, {
+const { data: roleResourcePermissions, refresh } = await useFetch<RoleResourcePermission[]>(`${nacEndpointPrefix}/roleResourcePermissions`, {
   headers: crudHeaders(),
 })
 
@@ -138,7 +138,7 @@ const saveChanges = async () => {
 
     // Batch create
     for (const item of toCreate) {
-      promises.push($fetch(`${endpointPrefix}/roleResourcePermissions`, {
+      promises.push($fetch(`${nacEndpointPrefix}/roleResourcePermissions`, {
         method: 'POST',
         headers: crudHeaders(),
         body: item,
@@ -147,7 +147,7 @@ const saveChanges = async () => {
 
     // Batch delete
     for (const id of toDelete) {
-      promises.push($fetch(`${endpointPrefix}/roleResourcePermissions/${id}`, {
+      promises.push($fetch(`${nacEndpointPrefix}/roleResourcePermissions/${id}`, {
         method: 'DELETE',
         headers: crudHeaders(),
         body: undefined, // Explicitly undefined for DELETE generally, though not strictly needed

@@ -8,9 +8,9 @@ const props = defineProps<{
 
 const { user } = useUserSession()
 
-const { endpointPrefix } = useRuntimeConfig().public.autoCrud
+const { nacEndpointPrefix } = useRuntimeConfig().public.autoCrud
 const systemTables = ['users', 'roles', 'permissions', 'resources', 'roleResourcePermissions', 'testimonials', 'subscribers']
-const { data: schemas } = await useFetch<string[]>(`${endpointPrefix}/_schemas`)
+const { data: schemas } = await useFetch<string[]>(`${nacEndpointPrefix}/_schemas`)
 
 const filteredResources = useArrayDifference(() => schemas.value || [], systemTables)
 

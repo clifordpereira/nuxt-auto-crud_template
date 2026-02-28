@@ -8,11 +8,11 @@ definePageMeta({
   middleware: 'auth',
 })
 
-const { endpointPrefix } = useRuntimeConfig().public.autoCrud
+const { nacEndpointPrefix } = useRuntimeConfig().public.autoCrud
 
 const { user } = useUserSession()
 
-const { data: users } = useFetch<unknown[]>(`${endpointPrefix}/users`, {
+const { data: users } = useFetch<unknown[]>(`${nacEndpointPrefix}/users`, {
   headers: crudHeaders(),
   lazy: true,
   immediate: hasPermission(user.value, 'users', 'list'),

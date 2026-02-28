@@ -9,13 +9,13 @@ const props = defineProps<{
   resource: string
 }>()
 
-const { endpointPrefix } = useRuntimeConfig().public.autoCrud
+const { nacEndpointPrefix } = useRuntimeConfig().public.autoCrud
 
-const { data } = await useFetch(`${endpointPrefix}/${props.resource}`, {
+const { data } = await useFetch(`${nacEndpointPrefix}/${props.resource}`, {
   headers: crudHeaders(),
 })
 
-const { data: schema } = await useFetch<SchemaDefinition>(`${endpointPrefix}/_schemas/${props.resource}`, {
+const { data: schema } = await useFetch<SchemaDefinition>(`${nacEndpointPrefix}/_schemas/${props.resource}`, {
   headers: crudHeaders(),
 })
 
