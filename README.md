@@ -14,7 +14,7 @@ This template is currently undergoing a major internal refactor to align with th
 While the saas template is being updated, please use the minimal starter templates for immediate development:
 
 * **SQLite/libSQL:** [nac-starter](https://github.com/clifordpereira/nac-starter)
-* **MySQL:** [nac-starter-mysql](https://www.google.com/search?q=https://github.com/clifordpereira/nac-starter-mysql)
+* **MySQL:** [nac-starter-mysql](https://github.com/clifordpereira/nac-starter-mysql)
 
 ---
 
