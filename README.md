@@ -1,21 +1,38 @@
 # Nuxt Auto CRUD Template
 
+## Introduction
+
 **The Nuxt Auto CRUD Template is the production-ready Nuxt 4 + Nuxt UI 4 implementation of nuxt-auto-crud.** It serves as the blueprint for creating specialized apps with zero-rebuild core logic.
+
+
+### ⚠️ Compatibility Notice
+
+This template is currently undergoing a major internal refactor to align with the latest version of the **NAC core module** (2.x). Due to active development priorities, full compatibility is expected in a few months.
+
+### 🚀 Getting Started
+
+While the saas template is being updated, please use the minimal starter templates for immediate development:
+
+* **SQLite/libSQL:** [nac-starter](https://github.com/clifordpereira/nac-starter)
+* **MySQL:** [nac-starter-mysql](https://www.google.com/search?q=https://github.com/clifordpereira/nac-starter-mysql)
+
+---
 
 | Component | Technology Stack |
 | :--- | :--- |
 | **UI Framework** | Nuxt UI 4 (Tailwind 4) |
 | **Core Engine** | `nuxt-auto-crud` |
 | **Auth** | `nuxt-auth-utils` (Session-based) |
-| **Authorization** | `nuxt-authorization` (RBAC) |
+| **Authorization** | custom built |
 
 ## Features
-* **Automatic CRUD**: Fully dynamic logic without code generation.
+* **Dynamic CRUD**: Fully dynamic logic without code generation.
 * **Dynamic Forms & Tables**: Built-in search, pagination, and validation.
 * **Relation Handling**: Seamlessly manage database relationships.
 * **Admin Dashboard**: Centralized management interface.
-* **Real-time Sync**: Zero-config SSE broadcasting for instant UI updates.
 * **Auth Ready**: Integrated Social Login and Password Reset.
+* **Real-time Sync**: Zero-config SSE broadcasting for instant UI updates. 
+> **Note:** Real-time Sync is currently not supported for serverless environments.
 
 ## Seeding
 * Seeding is triggered upon the first login of `NUXT_ADMIN_EMAIL` (defaults to `admin@example.com`).
